@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <title>Gestión de Cuentas</title>
+    </h:head>
+
+    <h:body>
+
+        <h:form id="menuForm">
+            <p:menubar>
+                <p:menuitem value="Inicio" url="index.xhtml" icon="pi pi-home"/>
+
+                <p:submenu label="Clientes" icon="pi pi-users">
+                    <p:menuitem value="Gestionar Clientes" url="GestionCliente.xhtml"/>
+                </p:submenu>
+
+                <p:submenu label="Cuentas" icon="pi pi-wallet">
+                    <p:menuitem value="Gestionar Cuentas" url="GestionCuenta.xhtml"/>
+                </p:submenu>
+            </p:menubar>
+        </h:form>
+
+
+        <h:form id="cuentaForm">
+            <p:panel header="Crear Cuenta" style="margin-top:20px;">
+                <h:panelGrid columns="2" columnClasses="label,value" cellpadding="5">
+
+                    <h:outputLabel value="Cédula Cliente:" for="cedula"/>
+                    <p:inputText id="cedula" value="#{cuentaController.cuentaNueva.cedulaCliente}" required="true" label="Cédula Cliente"/>
+
+                    <p:selectOneMenu id="tipo" value="#{cuentaController.cuentaNueva.tipo}" required="true" label="Tipo">
+                        <f:selectItem itemLabel="Seleccione" itemValue="" noSelectionOption="true"/>
+                        <f:selectItem itemLabel="Ahorro" itemValue="1"/>
+                        <f:selectItem itemLabel="Corriente" itemValue="2"/>
+                    </p:selectOneMenu>
+
+                    <h:selectOneMenu value="#{cuentaController.cuentaNueva.moneda}">
+                        <f:selectItem itemValue="1" itemLabel="CRC" />
+                        <f:selectItem itemValue="2" itemLabel="USD" />
+                    </h:selectOneMenu>
+
+
+                    <h:outputLabel value="Saldo Inicial:" for="saldo"/>
+                    <p:inputText id="saldo" value="#{cuentaController.cuentaNueva.saldo}" label="Saldo Inicial"/>
+
+                    <h:outputLabel value="Interés (%):" for="interes"/>
+                    <p:inputText id="interes" value="#{cuentaController.cuentaNueva.interes}" label="Interés"/>
+
+                    <h:outputLabel value="Comisión (%):" for="comision"/>
+                    <p:inputText id="comision" value="#{cuentaController.cuentaNueva.comision}" label="Comisión"/>
+
+                    <p:selectOneMenu id="estado" value="#{cuentaController.cuentaNueva.estado}" required="true" label="Estado">
+                        <f:selectItem itemLabel="Activa" itemValue="1"/>
+                        <f:selectItem itemLabel="Bloqueada" itemValue="2"/>
+                        <f:selectItem itemLabel="Cerrada" itemValue="3"/>
+                    </p:selectOneMenu>
+
+                </h:panelGrid>
+
+                <p:commandButton value="Crear Cuenta" action="#{cuentaController.crearCuenta}" 
+                                 update="@form, msgs" icon="pi pi-check"/>
+            </p:panel>
+
+            <p:growl id="msgs" showDetail="true" life="3000"/>
+        </h:form>
+
+    </h:body>
+</html>
