@@ -4,9 +4,9 @@ import model.Cuenta;
 import service.ServiceCuenta;
 import java.util.List;
 import java.io.Serializable;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 @ManagedBean
@@ -15,9 +15,11 @@ public class CuentaController implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Cuenta cuentaNueva = new Cuenta();
-    private List<Cuenta> cuentasCliente;
+    private Cuenta cuentaNueva = new Cuenta(); // Objeto para el formulario
+    private List<Cuenta> cuentas;              // Lista de cuentas existentes
+    private int cedulaCliente;                 // Para seleccionar cliente al crear la cuenta
 
+    // Getters y setters
     public Cuenta getCuentaNueva() {
         return cuentaNueva;
     }
@@ -26,66 +28,54 @@ public class CuentaController implements Serializable {
         this.cuentaNueva = cuentaNueva;
     }
 
-    public List<Cuenta> getCuentasCliente() {
-        return cuentasCliente;
-    }
-
-    // Crear cuenta
-    public String crearCuenta() {
-        ServiceCuenta servicioCuenta = new ServiceCuenta(); // ✅ instancia local
-
-        if (servicioCuenta.crearCuenta(cuentaNueva)) {
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Cuenta creada correctamente"));
-            cuentaNueva = new Cuenta(); // limpiar formulario
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo crear la cuenta"));
+    public List<Cuenta> getCuentas() {
+        if (cuentas == null) {
+            ServiceCuenta service = new ServiceCuenta();
+            cuentas = service.listarCuentas();
         }
-        return null; // mantener en la misma página
+        return cuentas;
     }
 
-    // Cargar las cuentas de un cliente específico
-    public void cargarCuentas(int cedulaCliente) {
-        ServiceCuenta servicioCuenta = new ServiceCuenta(); // ✅ instancia local
-        cuentasCliente = servicioCuenta.listarCuentasPorCliente(cedulaCliente);
+    public int getCedulaCliente() {
+        return cedulaCliente;
     }
 
-    // Convertir tipo de cuenta a texto
-    public String getTipoCuentaTexto(int tipo) {
-        switch (tipo) {
-            case 1:
-                return "Ahorro";
-            case 2:
-                return "Corriente";
-            default:
-                return "Desconocido";
+    public void setCedulaCliente(int cedulaCliente) {
+        this.cedulaCliente = cedulaCliente;
+    }
+
+    // Método para agregar una nueva cuenta
+    public String agregarCuenta() {
+        ServiceCuenta service = new ServiceCuenta();
+
+        // Generar código de cuenta automáticamente
+        String codigo = service.generarCodigoCuenta(cedulaCliente);
+        cuentaNueva.setCodigoCuenta(codigo);
+        cuentaNueva.setIdCliente(cedulaCliente);
+
+        // Insertar la cuenta en la base de datos
+        boolean exito = service.agregarCuenta(cuentaNueva);
+        if (!exito) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Error",
+                    "No se pudo agregar la cuenta.");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+            return null; // permanecer en la misma página
         }
-    }
 
-    // Convertir tipo de moneda a texto
-    public String getMonedaTexto(int moneda) {
-        switch (moneda) {
-            case 1:
-                return "CRC";
-            case 2:
-                return "USD";
-            default:
-                return "N/A";
-        }
-    }
+        // Recargar la lista de cuentas
+        cuentas = service.listarCuentas();
 
-    // Convertir estado de la cuenta a texto
-    public String getEstadoTexto(int estado) {
-        switch (estado) {
-            case 1:
-                return "Activa";
-            case 2:
-                return "Bloqueada";
-            case 3:
-                return "Cerrada";
-            default:
-                return "N/A";
-        }
+        // Limpiar formulario
+        cuentaNueva = new Cuenta();
+        cedulaCliente = 0;
+
+        // Mensaje de éxito
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+                "Éxito",
+                "Cuenta agregada correctamente. Código: " + codigo);
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+
+        return null; // permanecer en la misma página
     }
 }

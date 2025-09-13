@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Transferencias Externas</title>
+</h:head>
+<h:body>
+
+    <h:form>
+        <p:menubar>
+            <p:menuitem value="Inicio" url="index.xhtml" icon="pi pi-home" />
+
+            <p:submenu label="Clientes" icon="pi pi-users">
+                <p:menuitem value="Gestionar Clientes" url="GestionCliente.xhtml" icon="pi pi-user-plus" />
+            </p:submenu>
+
+            <p:submenu label="Cuentas" icon="pi pi-wallet">
+                <p:menuitem value="Gestionar Cuentas" url="GestionCuenta.xhtml" icon="pi pi-user-plus" />
+            </p:submenu>
+
+            <p:submenu label="Transacciones" icon="pi pi-exchange">
+                <p:menuitem value="Realizar Transacción" url="GestionTransaccion.xhtml" icon="pi pi-send" />
+            </p:submenu>
+
+            <p:submenu label="Contabilidad" icon="pi pi-file">
+                <p:menuitem value="Asientos Contables" url="AsientosContables.xhtml" icon="pi pi-list" />
+            </p:submenu>
+        </p:menubar>
+    </h:form>
+
+    <h:form>
+        <!-- Formulario para nueva transferencia externa -->
+        <p:panel header="Realizar Transferencia Externa">
+            <h:panelGrid columns="2" columnClasses="label,field">
+                
+                <h:outputLabel value="ID Cuenta Origen:" />
+                <p:inputText value="#{transferenciaExternaController.transferenciaNueva.idCuentaOrigen}" required="true" />
+
+                <h:outputLabel value="Banco Destino:" />
+                <p:inputText value="#{transferenciaExternaController.transferenciaNueva.bancoDestino}" required="true" />
+
+                <h:outputLabel value="Cuenta Destino:" />
+                <p:inputText value="#{transferenciaExternaController.transferenciaNueva.cuentaDestino}" required="true" />
+
+                <h:outputLabel value="Monto:" />
+                <p:inputText value="#{transferenciaExternaController.transferenciaNueva.monto}" required="true" />
+
+                <h:outputLabel value="Comprobante:" />
+                <p:inputText value="#{transferenciaExternaController.transferenciaNueva.comprobante}" required="true" />
+            </h:panelGrid>
+
+            <p:commandButton value="Realizar Transferencia"
+                             action="#{transferenciaExternaController.agregarTransferencia}"
+                             update="msgs, transferenciasTable" />
+        </p:panel>
+
+        <p:growl id="msgs" showDetail="true" life="3000" />
+
+        <!-- Tabla de historial de transferencias externas -->
+        <p:panel header="Historial de Transferencias Externas">
+            <p:dataTable id="transferenciasTable" value="#{transferenciaExternaController.transferencias}" var="t"
+                         emptyMessage="No hay transferencias externas registradas"
+                         paginator="true" rows="10">
+
+                <p:column headerText="ID Transferencia">
+                    <h:outputText value="#{t.idTransferenciaExterna}" />
+                </p:column>
+
+                <p:column headerText="ID Cuenta Origen">
+                    <h:outputText value="#{t.idCuentaOrigen}" />
+                </p:column>
+
+                <p:column headerText="Banco Destino">
+                    <h:outputText value="#{t.bancoDestino}" />
+                </p:column>
+
+                <p:column headerText="Cuenta Destino">
+                    <h:outputText value="#{t.cuentaDestino}" />
+                </p:column>
+
+                <p:column headerText="Monto">
+                    <h:outputText value="#{t.monto}" />
+                </p:column>
+
+                <p:column headerText="Comprobante">
+                    <h:outputText value="#{t.comprobante}" />
+                </p:column>
+
+                <p:column headerText="Fecha">
+                    <h:outputText value="#{t.fecha}" />
+                </p:column>
+
+                <p:column headerText="Estado">
+                    <h:outputText value="#{t.estado}" />
+                </p:column>
+
+            </p:dataTable>
+        </p:panel>
+
+    </h:form>
+
+</h:body>
+</html>
