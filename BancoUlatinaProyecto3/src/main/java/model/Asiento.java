@@ -1,15 +1,14 @@
 package model;
 
-import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 
 public class Asiento {
 
     private int idAsiento;
     private int idTransaccion;
     private String cuentaContable;
-    private BigDecimal debe;
-    private BigDecimal haber;
+    private Double debe;
+    private Double haber;
     private Date fecha;
 
     // Constructor vacío
@@ -17,7 +16,7 @@ public class Asiento {
 
     // Constructor con todos los campos
     public Asiento(int idAsiento, int idTransaccion, String cuentaContable, 
-                   BigDecimal debe, BigDecimal haber, Date fecha) {
+                   Double debe, Double haber, Date fecha) {
         this.idAsiento = idAsiento;
         this.idTransaccion = idTransaccion;
         this.cuentaContable = cuentaContable;
@@ -51,19 +50,19 @@ public class Asiento {
         this.cuentaContable = cuentaContable;
     }
 
-    public BigDecimal getDebe() {
+    public Double getDebe() {
         return debe;
     }
 
-    public void setDebe(BigDecimal debe) {
+    public void setDebe(Double debe) {
         this.debe = debe;
     }
 
-    public BigDecimal getHaber() {
+    public Double getHaber() {
         return haber;
     }
 
-    public void setHaber(BigDecimal haber) {
+    public void setHaber(Double haber) {
         this.haber = haber;
     }
 

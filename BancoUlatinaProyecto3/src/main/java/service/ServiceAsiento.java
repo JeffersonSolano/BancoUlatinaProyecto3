@@ -3,6 +3,7 @@ package service;
 import model.Asiento;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ServiceAsiento {
@@ -21,9 +22,9 @@ public class ServiceAsiento {
                         rs.getInt("id_asiento"),
                         rs.getInt("id_transaccion"),
                         rs.getString("cuenta_contable"),
-                        rs.getBigDecimal("debe"),
-                        rs.getBigDecimal("haber"),
-                        rs.getDate("fecha")
+                        rs.getDouble("debe"),
+                        rs.getDouble("haber"),
+                        rs.getDate("fecha") != null ? new Date(rs.getDate("fecha").getTime()) : null
                 ));
             }
 

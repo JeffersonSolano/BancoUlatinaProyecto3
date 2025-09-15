@@ -79,6 +79,11 @@ public class ServiceTransaccion {
             int idTransaccion = insertarTransaccion(con, t);
             t.setIdTransaccion(idTransaccion);
 
+            // Generar asiento contable automáticamente si fue exitosa
+            if ("exitoso".equals(t.getEstado())) {
+                generarAsientoContable(con, t);
+            }
+
             con.commit();
             exito = true;
 
@@ -119,6 +124,70 @@ public class ServiceTransaccion {
         return 0;
     }
 
+    // Método para generar asientos contables (solo para vista)
+    private void generarAsientoContable(Connection con, Transaccion t) throws SQLException {
+        String sql = "INSERT INTO asientos_contables (id_transaccion, cuenta_contable, debe, haber, fecha) VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            java.sql.Date fechaSQL = new java.sql.Date(t.getFecha() != null ? t.getFecha().getTime() : System.currentTimeMillis());
+
+            switch (t.getTipo().toLowerCase()) {
+                case "deposito":
+                    // Caja (Debe)
+                    ps.setInt(1, t.getIdTransaccion());
+                    ps.setString(2, "Caja");
+                    ps.setDouble(3, t.getMonto());
+                    ps.setDouble(4, 0.0);
+                    ps.setDate(5, fechaSQL);
+                    ps.executeUpdate();
+
+                    // Cuenta Cliente (Haber)
+                    ps.setInt(1, t.getIdTransaccion());
+                    ps.setString(2, "Cuenta Cliente #" + t.getIdCuentaOrigen());
+                    ps.setDouble(3, 0.0);
+                    ps.setDouble(4, t.getMonto());
+                    ps.setDate(5, fechaSQL);
+                    ps.executeUpdate();
+                    break;
+
+                case "retiro":
+                    // Cuenta Cliente (Debe)
+                    ps.setInt(1, t.getIdTransaccion());
+                    ps.setString(2, "Cuenta Cliente #" + t.getIdCuentaOrigen());
+                    ps.setDouble(3, t.getMonto());
+                    ps.setDouble(4, 0.0);
+                    ps.setDate(5, fechaSQL);
+                    ps.executeUpdate();
+
+                    // Caja (Haber)
+                    ps.setInt(1, t.getIdTransaccion());
+                    ps.setString(2, "Caja");
+                    ps.setDouble(3, 0.0);
+                    ps.setDouble(4, t.getMonto());
+                    ps.setDate(5, fechaSQL);
+                    ps.executeUpdate();
+                    break;
+
+                case "transferencia":
+                    // Cuenta Destino (Debe)
+                    ps.setInt(1, t.getIdTransaccion());
+                    ps.setString(2, "Cuenta Cliente #" + t.getIdCuentaDestino());
+                    ps.setDouble(3, t.getMonto());
+                    ps.setDouble(4, 0.0);
+                    ps.setDate(5, fechaSQL);
+                    ps.executeUpdate();
+
+                    // Cuenta Origen (Haber)
+                    ps.setInt(1, t.getIdTransaccion());
+                    ps.setString(2, "Cuenta Cliente #" + t.getIdCuentaOrigen());
+                    ps.setDouble(3, 0.0);
+                    ps.setDouble(4, t.getMonto());
+                    ps.setDate(5, fechaSQL);
+                    ps.executeUpdate();
+                    break;
+            }
+        }
+    }
+
     // Listar todas las transacciones
     public List<Transaccion> listarTransacciones() {
         List<Transaccion> lista = new ArrayList<>();
@@ -130,7 +199,7 @@ public class ServiceTransaccion {
                         rs.getInt("id_transacciones"),
                         rs.getInt("id_cuenta_origen"),
                         rs.getInt("id_cuenta_destino"),
-                        null, // código desde la vista no es necesario al listar
+                        null,
                         null,
                         rs.getString("tipo"),
                         rs.getDouble("monto"),

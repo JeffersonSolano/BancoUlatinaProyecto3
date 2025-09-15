@@ -13,13 +13,12 @@ public class AsientoController implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private List<Asiento> asientos;
+    private ServiceAsiento service = new ServiceAsiento();
 
     // Getter para la lista de asientos
     public List<Asiento> getAsientos() {
-        if (asientos == null) {
-            ServiceAsiento service = new ServiceAsiento();
-            asientos = service.listarAsientos();
-        }
+        // Siempre recarga para reflejar las transacciones recientes
+        asientos = service.listarAsientos();
         return asientos;
     }
 }
