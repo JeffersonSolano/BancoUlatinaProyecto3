@@ -4,139 +4,139 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-<h:head>
-    <title>Gestión de Cuentas</title>
-</h:head>
-<h:body>
+    <h:head>
+        <title>Gestión de Cuentas</title>
+    </h:head>
+    <h:body>
 
-    <h:form id="formCuentas">
+        <h:form id="formCuentas">
 
-        <!-- Menú superior -->
-        <p:menubar>
-            <p:menuitem value="Inicio" url="index.xhtml" icon="pi pi-home" />
-            <p:submenu label="Clientes" icon="pi pi-users">
-                <p:menuitem value="Gestionar Clientes" url="GestionCliente.xhtml" icon="pi pi-user-plus" />
-            </p:submenu>
-            <p:submenu label="Cuentas" icon="pi pi-wallet">
-                <p:menuitem value="Gestionar Cuenta" url="GestionCuenta.xhtml" icon="pi pi-user-plus" />
-            </p:submenu>
-        </p:menubar>
+            <!-- Menú superior -->
+            <p:menubar>
+                <p:menuitem value="Inicio" url="index.xhtml" icon="pi pi-home" />
+                <p:submenu label="Clientes" icon="pi pi-users">
+                    <p:menuitem value="Gestionar Clientes" url="GestionCliente.xhtml" icon="pi pi-user-plus" />
+                </p:submenu>
+                <p:submenu label="Cuentas" icon="pi pi-wallet">
+                    <p:menuitem value="Gestionar Cuenta" url="GestionCuenta.xhtml" icon="pi pi-user-plus" />
+                </p:submenu>
+            </p:menubar>
 
-        <!-- Mensajes de éxito/error -->
-        <p:growl id="msgs" showDetail="true" life="3000" />
+            <!-- Mensajes de éxito/error -->
+            <p:growl id="msgs" showDetail="true" life="3000" />
 
-        <!-- Formulario para agregar cuenta -->
-        <p:panel header="Agregar Cuenta">
-            <h:panelGrid columns="2" columnClasses="label,value">
+            <!-- Formulario para agregar cuenta -->
+            <p:panel header="Agregar Cuenta">
+                <h:panelGrid columns="2" columnClasses="label,value">
 
-                <h:outputLabel value="Cédula del Cliente:"/>
-                <p:inputText value="#{cuentaController.cedulaCliente}" required="true" label="Cédula" />
+                    <h:outputLabel value="Cédula del Cliente:"/>
+                    <p:inputText value="#{cuentaController.cedulaCliente}" required="true" label="Cédula" />
 
-                <h:outputLabel value="Tipo de Cuenta:"/>
-                <p:selectOneMenu value="#{cuentaController.cuentaNueva.tipoCuenta}" required="true" label="Tipo">
-                    <f:selectItem itemLabel="Seleccione" itemValue="" />
-                    <f:selectItem itemLabel="Ahorro" itemValue="ahorro" />
-                    <f:selectItem itemLabel="Corriente" itemValue="corriente" />
-                </p:selectOneMenu>
+                    <h:outputLabel value="Tipo de Cuenta:"/>
+                    <p:selectOneMenu value="#{cuentaController.cuentaNueva.tipoCuenta}" required="true">
+                        <f:selectItem itemLabel="Seleccione" itemValue="" />
+                        <f:selectItem itemLabel="Ahorro" itemValue="ahorro" />
+                        <f:selectItem itemLabel="Corriente" itemValue="corriente" />
+                    </p:selectOneMenu>
 
-                <h:outputLabel value="Moneda:"/>
-                <p:selectOneMenu value="#{cuentaController.cuentaNueva.moneda}" required="true" label="Moneda">
-                    <f:selectItem itemLabel="Seleccione" itemValue="" />
-                    <f:selectItem itemLabel="CRC" itemValue="CRC" />
-                    <f:selectItem itemLabel="USD" itemValue="USD" />
-                </p:selectOneMenu>
+                    <h:outputLabel value="Moneda:"/>
+                    <p:selectOneMenu value="#{cuentaController.cuentaNueva.moneda}" required="true">
+                        <f:selectItem itemLabel="Seleccione" itemValue="" />
+                        <f:selectItem itemLabel="CRC" itemValue="CRC" />
+                        <f:selectItem itemLabel="USD" itemValue="USD" />
+                    </p:selectOneMenu>
 
-                <h:outputLabel value="Saldo Inicial:"/>
-                <p:inputText value="#{cuentaController.cuentaNueva.saldo}" required="true" label="Saldo Inicial">
-                    <f:convertNumber />
-                </p:inputText>
+                    <h:outputLabel value="Saldo Inicial:"/>
+                    <p:inputText value="#{cuentaController.cuentaNueva.saldo}" required="true">
+                        <f:convertNumber />
+                    </p:inputText>
 
-                <h:outputLabel value="Interés:"/>
-                <p:inputText value="#{cuentaController.cuentaNueva.interes}" required="true" label="Interés">
-                    <f:convertNumber />
-                </p:inputText>
+                    <h:outputLabel value="Interés:"/>
+                    <p:inputText value="#{cuentaController.cuentaNueva.interes}" required="true">
+                        <f:convertNumber />
+                    </p:inputText>
 
-                <h:outputLabel value="Comisión:"/>
-                <p:inputText value="#{cuentaController.cuentaNueva.comision}" required="true" label="Comisión">
-                    <f:convertNumber />
-                </p:inputText>
+                    <h:outputLabel value="Comisión:"/>
+                    <p:inputText value="#{cuentaController.cuentaNueva.comision}" required="true">
+                        <f:convertNumber />
+                    </p:inputText>
 
-                <h:outputLabel value="Estado:"/>
-                <p:selectOneMenu value="#{cuentaController.cuentaNueva.estado}" required="true" label="Estado">
-                    <f:selectItem itemLabel="Seleccione" itemValue="" />
-                    <f:selectItem itemLabel="Activa" itemValue="activa" />
-                    <f:selectItem itemLabel="Bloqueada" itemValue="bloqueada" />
-                    <f:selectItem itemLabel="Cerrada" itemValue="cerrada" />
-                </p:selectOneMenu>
+                    <h:outputLabel value="Estado:"/>
+                    <p:selectOneMenu value="#{cuentaController.cuentaNueva.estado}" required="true">
+                        <f:selectItem itemLabel="Seleccione" itemValue="" />
+                        <f:selectItem itemLabel="Activa" itemValue="activa" />
+                        <f:selectItem itemLabel="Bloqueada" itemValue="bloqueada" />
+                        <f:selectItem itemLabel="Cerrada" itemValue="cerrada" />
+                    </p:selectOneMenu>
 
-                <h:outputLabel value="Fecha de Apertura:"/>
-                <p:datePicker value="#{cuentaController.cuentaNueva.fechaApertura}" pattern="yyyy-MM-dd" required="true" />
+                    <h:outputLabel value="Fecha de Apertura:"/>
+                    <p:datePicker value="#{cuentaController.cuentaNueva.fechaApertura}" pattern="yyyy-MM-dd" required="true"/>
+                </h:panelGrid>
 
-            </h:panelGrid>
+                <p:commandButton value="Agregar Cuenta"
+                                 action="#{cuentaController.agregarCuenta}"
+                                 update="msgs, cuentasTable"
+                                 process="@form" />
+            </p:panel>
 
-            <p:commandButton value="Agregar Cuenta"
-                             action="#{cuentaController.agregarCuenta}"
-                             update="msgs, cuentasTable"
-                             process="@form" />
-        </p:panel>
 
-        <!-- Tabla de cuentas -->
-        <p:panel header="Lista de Cuentas">
-            <p:dataTable id="cuentasTable" value="#{cuentaController.cuentas}" var="c"
-                         emptyMessage="No hay cuentas registradas">
+            <!-- Tabla de cuentas -->
+            <p:panel header="Lista de Cuentas">
+                <p:dataTable id="cuentasTable" value="#{cuentaController.cuentas}" var="c"
+                             emptyMessage="No hay cuentas registradas">
 
-                <p:column headerText="ID Interno">
-                    <h:outputText value="#{c.idCuentasClientes}" />
-                </p:column>
+                    <p:column headerText="ID Interno">
+                        <h:outputText value="#{c.idCuentasClientes}" />
+                    </p:column>
 
-                <p:column headerText="Cédula Cliente">
-                    <h:outputText value="#{c.idCliente}" />
-                </p:column>
+                    <p:column headerText="Cédula Cliente">
+                        <h:outputText value="#{c.idCliente}" />
+                    </p:column>
 
-                <p:column headerText="Tipo">
-                    <h:outputText value="#{c.tipoCuenta}" />
-                </p:column>
+                    <p:column headerText="Tipo">
+                        <h:outputText value="#{c.tipoCuenta}" />
+                    </p:column>
 
-                <p:column headerText="Moneda">
-                    <h:outputText value="#{c.moneda}" />
-                </p:column>
+                    <p:column headerText="Moneda">
+                        <h:outputText value="#{c.moneda}" />
+                    </p:column>
 
-                <p:column headerText="Saldo">
-                    <h:outputText value="#{c.saldo}">
-                        <f:convertNumber type="number" />
-                    </h:outputText>
-                </p:column>
+                    <p:column headerText="Saldo">
+                        <h:outputText value="#{c.saldo}">
+                            <f:convertNumber type="number" />
+                        </h:outputText>
+                    </p:column>
 
-                <p:column headerText="Interés">
-                    <h:outputText value="#{c.interes}">
-                        <f:convertNumber type="number" />
-                    </h:outputText>
-                </p:column>
+                    <p:column headerText="Interés">
+                        <h:outputText value="#{c.interes}">
+                            <f:convertNumber type="number" />
+                        </h:outputText>
+                    </p:column>
 
-                <p:column headerText="Comisión">
-                    <h:outputText value="#{c.comision}">
-                        <f:convertNumber type="number" />
-                    </h:outputText>
-                </p:column>
+                    <p:column headerText="Comisión">
+                        <h:outputText value="#{c.comision}">
+                            <f:convertNumber type="number" />
+                        </h:outputText>
+                    </p:column>
 
-                <p:column headerText="Estado">
-                    <h:outputText value="#{c.estado}" />
-                </p:column>
+                    <p:column headerText="Estado">
+                        <h:outputText value="#{c.estado}" />
+                    </p:column>
 
-                <p:column headerText="Fecha Apertura">
-                    <h:outputText value="#{c.fechaApertura}">
-                        <f:convertDateTime pattern="yyyy-MM-dd" />
-                    </h:outputText>
-                </p:column>
+                    <p:column headerText="Fecha Apertura">
+                        <h:outputText value="#{c.fechaApertura}">
+                            <f:convertDateTime pattern="yyyy-MM-dd" />
+                        </h:outputText>
+                    </p:column>
 
-                <p:column headerText="Código Cuenta">
-                    <h:outputText value="#{c.codigoCuenta}" />
-                </p:column>
+                    <p:column headerText="Código Cuenta">
+                        <h:outputText value="#{c.codigoCuenta}" />
+                    </p:column>
 
-            </p:dataTable>
-        </p:panel>
+                </p:dataTable>
+            </p:panel>
 
-    </h:form>
+        </h:form>
 
-</h:body>
+    </h:body>
 </html>

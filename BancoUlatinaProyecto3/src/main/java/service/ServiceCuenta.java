@@ -25,7 +25,7 @@ public class ServiceCuenta {
             ps.setString(5, c.getEstado());
             ps.setBigDecimal(6, BigDecimal.valueOf(c.getInteres()));
             ps.setBigDecimal(7, BigDecimal.valueOf(c.getComision()));
-            ps.setDate(8, c.getFechaApertura());
+            ps.setDate(8, new java.sql.Date(c.getFechaApertura().getTime()));
             ps.setString(9, c.getCodigoCuenta());
 
             return ps.executeUpdate() > 0;

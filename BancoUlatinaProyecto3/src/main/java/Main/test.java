@@ -2,42 +2,37 @@ package main;
 
 import model.Cuenta;
 import service.ServiceCuenta;
-
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 public class test {
 
     public static void main(String[] args) {
 
-        // Crear el servicio para cuentas
         ServiceCuenta service = new ServiceCuenta();
 
-        // 1) Crear una nueva cuenta para un cliente existente
         Cuenta nuevaCuenta = new Cuenta();
-        nuevaCuenta.setIdCliente(1221);              // asegúrate que exista este cliente
-        nuevaCuenta.setTipoCuenta("ahorro");             // ENUM: 'ahorro' o 'corriente'
+        nuevaCuenta.setIdCliente(1111);
+        nuevaCuenta.setTipoCuenta("ahorro");
         nuevaCuenta.setMoneda("CRC");
-        nuevaCuenta.setSaldo(1000.00);                   // ahora Double
-        nuevaCuenta.setEstado("Activa");
-        nuevaCuenta.setInteres(0.5);                     // ahora Double
-        nuevaCuenta.setComision(2.0);                    // ahora Double
-        nuevaCuenta.setFechaApertura(new Date(System.currentTimeMillis()));
+        nuevaCuenta.setSaldo(1000.0);
+        nuevaCuenta.setEstado("activa");
+        nuevaCuenta.setInteres(0.5);
+        nuevaCuenta.setComision(2.0);
+        nuevaCuenta.setFechaApertura(new Date());
 
-        // 2) Insertar la cuenta en la base de datos
-        boolean insertOk = service.agregarCuenta(nuevaCuenta);
-        System.out.println("Cuenta insertada correctamente? " + insertOk);
+        boolean ok = service.agregarCuenta(nuevaCuenta);
+        System.out.println("Cuenta agregada: " + ok + ", Código: " + nuevaCuenta.getCodigoCuenta());
 
-        // 3) Listar todas las cuentas y mostrar
         List<Cuenta> cuentas = service.listarCuentas();
-        System.out.println("\n--- Lista de cuentas ---");
-        for (Cuenta c : cuentas) {
-            System.out.println("ClienteID (cédula): " + c.getIdCliente()
-                    + ", Tipo: " + c.getTipoCuenta()
-                    + ", Moneda: " + c.getMoneda()
-                    + ", Saldo: " + c.getSaldo()
-                    + ", Estado: " + c.getEstado()
-                    + ", Código: " + c.getCodigoCuenta());
-        }
+        cuentas.forEach(c -> {
+            System.out.println("ID: " + c.getIdCuentasClientes() +
+                    ", Cliente: " + c.getIdCliente() +
+                    ", Tipo: " + c.getTipoCuenta() +
+                    ", Saldo: " + c.getSaldo() +
+                    ", Estado: " + c.getEstado() +
+                    ", Fecha: " + c.getFechaApertura() +
+                    ", Código: " + c.getCodigoCuenta());
+        });
     }
 }

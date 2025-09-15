@@ -13,13 +13,13 @@ public class Cuenta {
     private String estado;          // activa / bloqueada / cerrada
     private Double interes;
     private Double comision;
-    private Date fechaApertura;
+    private java.util.Date fechaApertura;
     private String codigoCuenta;    // Identificador por cliente (001, 002, ...)
 
     public Cuenta() {
     }
 
-    public Cuenta(int idCuentasClientes, int idCliente, String tipoCuenta, String moneda, Double saldo, String estado, Double interes, Double comision, Date fechaApertura, String codigoCuenta) {
+    public Cuenta(int idCuentasClientes, int idCliente, String tipoCuenta, String moneda, Double saldo, String estado, Double interes, Double comision, java.util.Date fechaApertura, String codigoCuenta) {
         this.idCuentasClientes = idCuentasClientes;
         this.idCliente = idCliente;
         this.tipoCuenta = tipoCuenta;
@@ -96,11 +96,11 @@ public class Cuenta {
         this.comision = comision;
     }
 
-    public Date getFechaApertura() {
+    public java.util.Date getFechaApertura() {
         return fechaApertura;
     }
 
-    public void setFechaApertura(Date fechaApertura) {
+    public void setFechaApertura(java.util.Date fechaApertura) {
         this.fechaApertura = fechaApertura;
     }
 
@@ -112,7 +112,6 @@ public class Cuenta {
         this.codigoCuenta = codigoCuenta;
     }
 
-    
-    
+   
     
 }
