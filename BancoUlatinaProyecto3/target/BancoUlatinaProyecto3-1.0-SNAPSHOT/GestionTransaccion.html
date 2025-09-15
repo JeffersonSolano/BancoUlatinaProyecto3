@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
 <h:head>
     <title>Gestión de Transacciones</title>
 </h:head>
+
 <h:body>
 
+    <!-- Menú superior -->
     <h:form>
         <p:menubar>
             <p:menuitem value="Inicio" url="index.xhtml" icon="pi pi-home" />
@@ -26,42 +29,54 @@
         </p:menubar>
     </h:form>
 
-    <h:form>
-        <!-- Panel para crear nueva transacción -->
+    <h:form id="transaccionForm">
+
+        <!-- Panel para nueva transacción -->
         <p:panel header="Nueva Transacción">
-            <h:panelGrid columns="2" columnClasses="label, value">
+            <h:panelGrid columns="2" columnClasses="label,value">
 
-                <h:outputLabel value="Cuenta Origen (ID):" />
-                <p:inputText value="#{transaccionController.transaccionNueva.idCuentaOrigen}" required="true" />
+                <h:outputLabel value="Cuenta Origen (Código):" for="codigoOrigen"/>
+                <p:inputText id="codigoOrigen" value="#{transaccionController.transaccionNueva.codigoCuentaOrigen}" required="true">
+                    <f:validateLength minimum="1"/>
+                </p:inputText>
+                <p:message for="codigoOrigen" />
 
-                <h:outputLabel value="Cuenta Destino (ID, solo para transferencia):" />
-                <p:inputText value="#{transaccionController.transaccionNueva.idCuentaDestino}" />
+                <h:outputLabel value="Cuenta Destino (Código, solo para transferencia):" for="codigoDestino"/>
+                <p:inputText id="codigoDestino" value="#{transaccionController.transaccionNueva.codigoCuentaDestino}">
+                    <f:validateLength minimum="1"/>
+                </p:inputText>
+                <p:message for="codigoDestino" />
 
-                <h:outputLabel value="Tipo de Transacción:" />
-                <p:selectOneMenu value="#{transaccionController.transaccionNueva.tipo}" required="true">
+                <h:outputLabel value="Tipo de Transacción:" for="tipoTransaccion"/>
+                <p:selectOneMenu id="tipoTransaccion" value="#{transaccionController.transaccionNueva.tipo}" required="true">
                     <f:selectItem itemLabel="Seleccione" itemValue="" />
                     <f:selectItem itemLabel="Depósito" itemValue="deposito" />
                     <f:selectItem itemLabel="Retiro" itemValue="retiro" />
                     <f:selectItem itemLabel="Transferencia" itemValue="transferencia" />
                 </p:selectOneMenu>
+                <p:message for="tipoTransaccion" />
 
-                <h:outputLabel value="Monto:" />
-                <p:inputText value="#{transaccionController.transaccionNueva.monto}" required="true" />
+                <h:outputLabel value="Monto:" for="monto"/>
+                <p:inputText id="monto" value="#{transaccionController.transaccionNueva.monto}" required="true">
+                    <f:validateDoubleRange minimum="0.01" />
+                </p:inputText>
+                <p:message for="monto" />
 
-                <h:outputLabel value="Descripción:" />
-                <p:inputText value="#{transaccionController.transaccionNueva.descripcion}" />
+                <h:outputLabel value="Descripción:" for="descripcion"/>
+                <p:inputText id="descripcion" value="#{transaccionController.transaccionNueva.descripcion}" />
+                <p:message for="descripcion" />
 
             </h:panelGrid>
 
             <p:commandButton value="Realizar Transacción"
                              action="#{transaccionController.agregarTransaccion}"
-                             update="msgs, transaccionesTable" />
+                             update="msgs, transaccionesTable, @form" />
         </p:panel>
 
-        <!-- Mensajes -->
+        <!-- Mensajes globales -->
         <p:growl id="msgs" showDetail="true" life="4000" />
 
-        <!-- Panel para historial de transacciones -->
+        <!-- Historial de transacciones -->
         <p:panel header="Historial de Transacciones" style="margin-top:20px;">
             <p:dataTable id="transaccionesTable" value="#{transaccionController.transacciones}" var="t"
                          emptyMessage="No hay transacciones registradas">
@@ -70,12 +85,12 @@
                     <h:outputText value="#{t.idTransaccion}" />
                 </p:column>
 
-                <p:column headerText="Cuenta Origen">
-                    <h:outputText value="#{t.idCuentaOrigen}" />
+                <p:column headerText="Código Cuenta Origen">
+                    <h:outputText value="#{t.codigoCuentaOrigen}" />
                 </p:column>
 
-                <p:column headerText="Cuenta Destino">
-                    <h:outputText value="#{t.idCuentaDestino}" />
+                <p:column headerText="Código Cuenta Destino">
+                    <h:outputText value="#{t.codigoCuentaDestino}" />
                 </p:column>
 
                 <p:column headerText="Tipo">

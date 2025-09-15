@@ -1,4 +1,4 @@
-/*package controller;
+package controller;
 
 import model.Transaccion;
 import service.ServiceTransaccion;
@@ -17,7 +17,9 @@ public class TransaccionController implements Serializable {
     private Transaccion transaccionNueva = new Transaccion(); // Para el formulario
     private List<Transaccion> transacciones;                  // Historial de transacciones
 
-    // Getter y Setter
+    private ServiceTransaccion service = new ServiceTransaccion(); // Instancia del service
+
+    // Getters y Setters
     public Transaccion getTransaccionNueva() {
         return transaccionNueva;
     }
@@ -28,7 +30,6 @@ public class TransaccionController implements Serializable {
 
     public List<Transaccion> getTransacciones() {
         if (transacciones == null) {
-            ServiceTransaccion service = new ServiceTransaccion();
             transacciones = service.listarTransacciones();
         }
         return transacciones;
@@ -36,7 +37,6 @@ public class TransaccionController implements Serializable {
 
     // Método para agregar transacción
     public String agregarTransaccion() {
-        ServiceTransaccion service = new ServiceTransaccion();
 
         boolean exito = service.agregarTransaccion(transaccionNueva);
 
@@ -61,4 +61,3 @@ public class TransaccionController implements Serializable {
         return null; // Mantenerse en la misma página
     }
 }
-*/

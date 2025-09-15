@@ -149,4 +149,39 @@ public class ServiceCuenta {
             return ps.executeUpdate() > 0;
         }
     }
+    
+    // Dentro de ServiceCuenta
+public Cuenta obtenerCuentaPorCodigo(String codigoCuenta) {
+    String sql = "SELECT * FROM cuentas_clientes WHERE codigoCuenta = ?";
+    try (Connection con = ConexionBD.getConnection();
+         PreparedStatement ps = con.prepareStatement(sql)) {
+
+        ps.setString(1, codigoCuenta);
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return new Cuenta(
+                        rs.getInt("id_cuentas_clientes"),
+                        rs.getInt("id_clientes"),
+                        rs.getString("tipo_cuenta"),
+                        rs.getString("moneda"),
+                        rs.getDouble("saldo"),
+                        rs.getString("estado"),
+                        rs.getDouble("interes"),
+                        rs.getDouble("comision"),
+                        rs.getDate("fecha_apertura"),
+                        rs.getString("codigoCuenta")
+                );
+            }
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return null; // si no encuentra nada
+}
+
+    
+    
+    
+    
 }

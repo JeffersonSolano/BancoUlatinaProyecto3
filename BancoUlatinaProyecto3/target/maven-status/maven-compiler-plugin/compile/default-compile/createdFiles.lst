@@ -1,6 +1,8 @@
 main\test.class
+service\ServiceTransaccion.class
 model\Cuenta.class
 service\ServiceCuenta.class
+controller\TransaccionController.class
 model\Cuota.class
 controller\PrestamoController.class
 model\Asiento.class

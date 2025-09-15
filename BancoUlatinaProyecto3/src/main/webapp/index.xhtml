@@ -3,27 +3,33 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
 
-<h:head>
-    <title>Sistema de Administración</title>
-</h:head>
-<h:body>
+    <h:head>
+        <title>Sistema de Administración</title>
+    </h:head>
+    <h:body>
 
-    <h:form>
-        <p:menubar>
-            <p:menuitem value="Inicio" url="index.xhtml" icon="pi pi-home" />
-            
-            <p:submenu label="Clientes" icon="pi pi-users">
-                <p:menuitem value="Gestionar Clientes" url="GestionCliente.xhtml" icon="pi pi-user-plus" />
-            </p:submenu>
+        <h:form>
+            <p:menubar>
+                <p:menuitem value="Inicio" url="index.xhtml" icon="pi pi-home" />
 
-             <p:submenu label="Cuenta" icon="pi pi-users">
-                <p:menuitem value="Gestionar Cuenta" url="GestionCuenta.xhtml" icon="pi pi-user-plus" />
-            </p:submenu>
-        </p:menubar>
-    </h:form>
+                <p:submenu label="Clientes" icon="pi pi-users">
+                    <p:menuitem value="Gestionar Clientes" url="GestionCliente.xhtml" icon="pi pi-user-plus" />
+                </p:submenu>
 
-    <h1>Bienvenido al Sistema de Administración</h1>
-    <p>Utiliza el menú superior para navegar entre las opciones.</p>
+                <p:submenu label="Cuenta" icon="pi pi-users">
+                    <p:menuitem value="Gestionar Cuenta" url="GestionCuenta.xhtml" icon="pi pi-user-plus" />
+                </p:submenu>
 
-</h:body>
+                <p:submenu label="Transacciones" icon="pi pi-users">
+                    <p:menuitem value="Realizar Transacción" url="GestionTransaccion.xhtml" icon="pi pi-plus" />
+                </p:submenu>
+
+
+            </p:menubar>
+        </h:form>
+
+        <h1>Bienvenido al Sistema de Administración</h1>
+        <p>Utiliza el menú superior para navegar entre las opciones.</p>
+
+    </h:body>
 </html>

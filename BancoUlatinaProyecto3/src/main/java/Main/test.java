@@ -1,38 +1,49 @@
 package main;
 
-import model.Cuenta;
-import service.ServiceCuenta;
+import model.Transaccion;
+import service.ServiceTransaccion;
 import java.util.Date;
-import java.util.List;
 
 public class test {
 
     public static void main(String[] args) {
 
-        ServiceCuenta service = new ServiceCuenta();
+        ServiceTransaccion serviceTransaccion = new ServiceTransaccion();
 
-        Cuenta nuevaCuenta = new Cuenta();
-        nuevaCuenta.setIdCliente(1111);
-        nuevaCuenta.setTipoCuenta("ahorro");
-        nuevaCuenta.setMoneda("CRC");
-        nuevaCuenta.setSaldo(1000.0);
-        nuevaCuenta.setEstado("activa");
-        nuevaCuenta.setInteres(0.5);
-        nuevaCuenta.setComision(2.0);
-        nuevaCuenta.setFechaApertura(new Date());
+        // Deposito
+        Transaccion deposito = new Transaccion();
+        deposito.setCodigoCuentaOrigen("001"); // Código de la cuenta que recibe
+        deposito.setTipo("deposito");
+        deposito.setMonto(50000.0);
+        deposito.setFecha(new Date());
+        deposito.setDescripcion("Depósito inicial");
+        deposito.setAutorizacion(true);
 
-        boolean ok = service.agregarCuenta(nuevaCuenta);
-        System.out.println("Cuenta agregada: " + ok + ", Código: " + nuevaCuenta.getCodigoCuenta());
+        serviceTransaccion.agregarTransaccion(deposito);
 
-        List<Cuenta> cuentas = service.listarCuentas();
-        cuentas.forEach(c -> {
-            System.out.println("ID: " + c.getIdCuentasClientes() +
-                    ", Cliente: " + c.getIdCliente() +
-                    ", Tipo: " + c.getTipoCuenta() +
-                    ", Saldo: " + c.getSaldo() +
-                    ", Estado: " + c.getEstado() +
-                    ", Fecha: " + c.getFechaApertura() +
-                    ", Código: " + c.getCodigoCuenta());
-        });
+        // Retiro
+        Transaccion retiro = new Transaccion();
+        retiro.setCodigoCuentaOrigen("001");
+        retiro.setTipo("retiro");
+        retiro.setMonto(20000.0);
+        retiro.setFecha(new Date());
+        retiro.setDescripcion("Retiro cajero");
+        retiro.setAutorizacion(true);
+
+        serviceTransaccion.agregarTransaccion(retiro);
+
+        // Transferencia interna
+        Transaccion transferencia = new Transaccion();
+        transferencia.setCodigoCuentaOrigen("001");
+        transferencia.setCodigoCuentaDestino("002");
+        transferencia.setTipo("transferencia");
+        transferencia.setMonto(10000.0);
+        transferencia.setFecha(new Date());
+        transferencia.setDescripcion("Transferencia ahorro -> corriente");
+        transferencia.setAutorizacion(true);
+
+        serviceTransaccion.agregarTransaccion(transferencia);
+
+        System.out.println("Transacciones registradas correctamente.");
     }
 }

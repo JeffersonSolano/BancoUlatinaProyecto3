@@ -1,31 +1,30 @@
 package model;
 
-import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 
 public class Transaccion {
 
-    private int idTransaccion;
-    private int idCuentaOrigen;
-    private int idCuentaDestino;
-    private String tipo;
-    private BigDecimal monto;
+    private int idTransaccion;       // PK autoincremental
+    private int idCuentaOrigen;      // FK: id_cuentas_clientes de origen
+    private int idCuentaDestino;     // FK: id_cuentas_clientes de destino (0 si no aplica)
+    private String codigoCuentaOrigen;  // Para recibir de la vista
+    private String codigoCuentaDestino; // Para recibir de la vista
+    private String tipo;             // deposito / retiro / transferencia
+    private Double monto;
     private Date fecha;
     private String estado;
     private boolean autorizacion;
     private String descripcion;
 
-    // Constructor vacío (necesario para JSF)
     public Transaccion() {
     }
 
-    // Constructor completo
-    public Transaccion(int idTransaccion, int idCuentaOrigen, int idCuentaDestino,
-                       String tipo, BigDecimal monto, Date fecha,
-                       String estado, boolean autorizacion, String descripcion) {
+    public Transaccion(int idTransaccion, int idCuentaOrigen, int idCuentaDestino, String codigoCuentaOrigen, String codigoCuentaDestino, String tipo, Double monto, Date fecha, String estado, boolean autorizacion, String descripcion) {
         this.idTransaccion = idTransaccion;
         this.idCuentaOrigen = idCuentaOrigen;
         this.idCuentaDestino = idCuentaDestino;
+        this.codigoCuentaOrigen = codigoCuentaOrigen;
+        this.codigoCuentaDestino = codigoCuentaDestino;
         this.tipo = tipo;
         this.monto = monto;
         this.fecha = fecha;
@@ -34,21 +33,6 @@ public class Transaccion {
         this.descripcion = descripcion;
     }
 
-    // Constructor sin idTransaccion (para inserciones)
-    public Transaccion(int idCuentaOrigen, int idCuentaDestino,
-                       String tipo, BigDecimal monto, Date fecha,
-                       String estado, boolean autorizacion, String descripcion) {
-        this.idCuentaOrigen = idCuentaOrigen;
-        this.idCuentaDestino = idCuentaDestino;
-        this.tipo = tipo;
-        this.monto = monto;
-        this.fecha = fecha;
-        this.estado = estado;
-        this.autorizacion = autorizacion;
-        this.descripcion = descripcion;
-    }
-
-    // Getters y Setters
     public int getIdTransaccion() {
         return idTransaccion;
     }
@@ -73,6 +57,22 @@ public class Transaccion {
         this.idCuentaDestino = idCuentaDestino;
     }
 
+    public String getCodigoCuentaOrigen() {
+        return codigoCuentaOrigen;
+    }
+
+    public void setCodigoCuentaOrigen(String codigoCuentaOrigen) {
+        this.codigoCuentaOrigen = codigoCuentaOrigen;
+    }
+
+    public String getCodigoCuentaDestino() {
+        return codigoCuentaDestino;
+    }
+
+    public void setCodigoCuentaDestino(String codigoCuentaDestino) {
+        this.codigoCuentaDestino = codigoCuentaDestino;
+    }
+
     public String getTipo() {
         return tipo;
     }
@@ -81,11 +81,11 @@ public class Transaccion {
         this.tipo = tipo;
     }
 
-    public BigDecimal getMonto() {
+    public Double getMonto() {
         return monto;
     }
 
-    public void setMonto(BigDecimal monto) {
+    public void setMonto(Double monto) {
         this.monto = monto;
     }
 
@@ -120,4 +120,6 @@ public class Transaccion {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
+    
 }
