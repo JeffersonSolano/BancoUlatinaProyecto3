@@ -1,23 +1,22 @@
 package model;
 
-import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 
 public class Prestamo {
 
-    private int idPrestamo;
-    private int idCliente;
-    private String tipo; // personal o hipotecario
-    private BigDecimal monto;
+    private int idPrestamo;       // PK interna
+    private int idCliente;        // FK hacia clientes.cedula
+    private String tipo;          // personal / hipotecario
+    private Double monto;
     private int plazoMeses;
-    private BigDecimal tasaInteres; // anual
+    private Double tasaInteres;
     private Date fechaSolicitud;
-    private String estado; // activo, pagado, mora
+    private String estado;        // activo / pagado / mora
 
-    public Prestamo() {}
+    public Prestamo() {
+    }
 
-    public Prestamo(int idPrestamo, int idCliente, String tipo, BigDecimal monto,
-                    int plazoMeses, BigDecimal tasaInteres, Date fechaSolicitud, String estado) {
+    public Prestamo(int idPrestamo, int idCliente, String tipo, Double monto, int plazoMeses, Double tasaInteres, Date fechaSolicitud, String estado) {
         this.idPrestamo = idPrestamo;
         this.idCliente = idCliente;
         this.tipo = tipo;
@@ -28,28 +27,67 @@ public class Prestamo {
         this.estado = estado;
     }
 
-    // Getters y Setters
-    public int getIdPrestamo() { return idPrestamo; }
-    public void setIdPrestamo(int idPrestamo) { this.idPrestamo = idPrestamo; }
+    public int getIdPrestamo() {
+        return idPrestamo;
+    }
 
-    public int getIdCliente() { return idCliente; }
-    public void setIdCliente(int idCliente) { this.idCliente = idCliente; }
+    public void setIdPrestamo(int idPrestamo) {
+        this.idPrestamo = idPrestamo;
+    }
 
-    public String getTipo() { return tipo; }
-    public void setTipo(String tipo) { this.tipo = tipo; }
+    public int getIdCliente() {
+        return idCliente;
+    }
 
-    public BigDecimal getMonto() { return monto; }
-    public void setMonto(BigDecimal monto) { this.monto = monto; }
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
+    }
 
-    public int getPlazoMeses() { return plazoMeses; }
-    public void setPlazoMeses(int plazoMeses) { this.plazoMeses = plazoMeses; }
+    public String getTipo() {
+        return tipo;
+    }
 
-    public BigDecimal getTasaInteres() { return tasaInteres; }
-    public void setTasaInteres(BigDecimal tasaInteres) { this.tasaInteres = tasaInteres; }
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 
-    public Date getFechaSolicitud() { return fechaSolicitud; }
-    public void setFechaSolicitud(Date fechaSolicitud) { this.fechaSolicitud = fechaSolicitud; }
+    public Double getMonto() {
+        return monto;
+    }
 
-    public String getEstado() { return estado; }
-    public void setEstado(String estado) { this.estado = estado; }
+    public void setMonto(Double monto) {
+        this.monto = monto;
+    }
+
+    public int getPlazoMeses() {
+        return plazoMeses;
+    }
+
+    public void setPlazoMeses(int plazoMeses) {
+        this.plazoMeses = plazoMeses;
+    }
+
+    public Double getTasaInteres() {
+        return tasaInteres;
+    }
+
+    public void setTasaInteres(Double tasaInteres) {
+        this.tasaInteres = tasaInteres;
+    }
+
+    public Date getFechaSolicitud() {
+        return fechaSolicitud;
+    }
+
+    public void setFechaSolicitud(Date fechaSolicitud) {
+        this.fechaSolicitud = fechaSolicitud;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
 }

@@ -1,4 +1,3 @@
-main\test.class
 service\ServiceTransaccion.class
 model\Cuenta.class
 service\ServiceCuenta.class

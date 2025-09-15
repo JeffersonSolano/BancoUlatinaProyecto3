@@ -10,25 +10,6 @@
 <h:body>
 
 <h:form>
-    <p:menubar>
-        <p:menuitem value="Inicio" url="index.xhtml" icon="pi pi-home" />
-
-        <p:submenu label="Clientes" icon="pi pi-users">
-            <p:menuitem value="Gestionar Clientes" url="GestionCliente.xhtml" icon="pi pi-user-plus" />
-        </p:submenu>
-
-        <p:submenu label="Cuentas" icon="pi pi-wallet">
-            <p:menuitem value="Gestionar Cuenta" url="GestionCuenta.xhtml" icon="pi pi-user-plus" />
-        </p:submenu>
-
-        <p:submenu label="Préstamos" icon="pi pi-money-bill">
-            <p:menuitem value="Gestionar Préstamo" url="GestionPrestamo.xhtml" icon="pi pi-plus" />
-        </p:submenu>
-    </p:menubar>
-</h:form>
-
-<h:form>
-    <!-- Formulario de solicitud de préstamo -->
     <p:panel header="Solicitar Préstamo">
         <h:panelGrid columns="2" cellpadding="5">
             <h:outputLabel value="Cédula del Cliente:" />
@@ -50,17 +31,16 @@
             <p:inputText value="#{prestamoController.prestamoNuevo.tasaInteres}" required="true" label="Tasa" />
         </h:panelGrid>
 
-        <p:commandButton value="Solicitar Préstamo" 
-                         action="#{prestamoController.agregarPrestamo}" 
-                         update="msgs, prestamosTable, cuotasPanel" />
+        <p:commandButton value="Solicitar Préstamo"
+                         action="#{prestamoController.agregarPrestamo}"
+                         update="msgs, prestamosTable" />
     </p:panel>
 
     <p:growl id="msgs" showDetail="true" life="3000" />
 
-    <!-- Tabla de préstamos -->
     <p:panel header="Lista de Préstamos">
-        <p:dataTable id="prestamosTable" value="#{prestamoController.prestamos}" var="p" 
-                     selection="#{prestamoController.prestamoNuevo}" selectionMode="single"
+        <p:dataTable id="prestamosTable" value="#{prestamoController.prestamos}" var="p"
+                     selection="#{prestamoController.prestamoSeleccionado}" selectionMode="single"
                      rowKey="#{p.idPrestamo}" paginator="true" rows="10">
             <p:column headerText="ID Préstamo">
                 <h:outputText value="#{p.idPrestamo}" />
@@ -82,25 +62,6 @@
             </p:column>
             <p:column headerText="Estado">
                 <h:outputText value="#{p.estado}" />
-            </p:column>
-        </p:dataTable>
-    </p:panel>
-
-    <!-- Panel de Cuotas -->
-    <p:panel id="cuotasPanel" header="Historial de Cuotas">
-        <p:dataTable value="#{prestamoController.listarCuotas(prestamoController.prestamoNuevo.idPrestamo)}" var="c"
-                     emptyMessage="Seleccione un préstamo para ver las cuotas">
-            <p:column headerText="Número de Cuota">
-                <h:outputText value="#{c.nroCuota}" />
-            </p:column>
-            <p:column headerText="Fecha Vencimiento">
-                <h:outputText value="#{c.fechaVencimiento}" />
-            </p:column>
-            <p:column headerText="Monto">
-                <h:outputText value="#{c.montoCuota}" />
-            </p:column>
-            <p:column headerText="Estado">
-                <h:outputText value="#{c.estado}" />
             </p:column>
         </p:dataTable>
     </p:panel>

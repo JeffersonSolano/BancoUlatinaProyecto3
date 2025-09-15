@@ -1,49 +1,51 @@
-package main;
+/*package main;
 
-import model.Transaccion;
-import service.ServiceTransaccion;
+import service.ServicePrestamo;
+import model.Prestamo;
 import java.util.Date;
+import java.util.List;
 
 public class test {
-
     public static void main(String[] args) {
 
-        ServiceTransaccion serviceTransaccion = new ServiceTransaccion();
+        ServicePrestamo service = new ServicePrestamo();
 
-        // Deposito
-        Transaccion deposito = new Transaccion();
-        deposito.setCodigoCuentaOrigen("001"); // Código de la cuenta que recibe
-        deposito.setTipo("deposito");
-        deposito.setMonto(50000.0);
-        deposito.setFecha(new Date());
-        deposito.setDescripcion("Depósito inicial");
-        deposito.setAutorizacion(true);
+        // 1. Crear un préstamo de prueba
+        Prestamo nuevoPrestamo = new Prestamo();
+        nuevoPrestamo.setIdCliente(12345678); // cedula del cliente
+        nuevoPrestamo.setTipo("personal");
+        nuevoPrestamo.setMonto(10000000.0); // ₡10 millones
+        nuevoPrestamo.setPlazoMeses(60); // 5 años
+        nuevoPrestamo.setTasaInteres(12.5); // interés anual
+        nuevoPrestamo.setFechaSolicitud(new Date()); // fecha actual
+        nuevoPrestamo.setEstado("activo");
 
-        serviceTransaccion.agregarTransaccion(deposito);
+        boolean agregado = service.agregarPrestamo(nuevoPrestamo);
+        if (agregado) {
+            System.out.println("Préstamo agregado correctamente. ID generado: " + nuevoPrestamo.getIdPrestamo());
+        } else {
+            System.out.println("Error al agregar el préstamo.");
+        }
 
-        // Retiro
-        Transaccion retiro = new Transaccion();
-        retiro.setCodigoCuentaOrigen("001");
-        retiro.setTipo("retiro");
-        retiro.setMonto(20000.0);
-        retiro.setFecha(new Date());
-        retiro.setDescripcion("Retiro cajero");
-        retiro.setAutorizacion(true);
+        // 2. Listar todos los préstamos
+        System.out.println("\nListado de todos los préstamos:");
+        List<Prestamo> prestamos = service.listarPrestamos();
+        for (Prestamo p : prestamos) {
+            System.out.println("ID: " + p.getIdPrestamo() +
+                               ", Cliente: " + p.getIdCliente() +
+                               ", Tipo: " + p.getTipo() +
+                               ", Monto: " + p.getMonto() +
+                               ", Plazo: " + p.getPlazoMeses() +
+                               ", Tasa: " + p.getTasaInteres() +
+                               ", Fecha: " + p.getFechaSolicitud() +
+                               ", Estado: " + p.getEstado());
+        }
 
-        serviceTransaccion.agregarTransaccion(retiro);
-
-        // Transferencia interna
-        Transaccion transferencia = new Transaccion();
-        transferencia.setCodigoCuentaOrigen("001");
-        transferencia.setCodigoCuentaDestino("002");
-        transferencia.setTipo("transferencia");
-        transferencia.setMonto(10000.0);
-        transferencia.setFecha(new Date());
-        transferencia.setDescripcion("Transferencia ahorro -> corriente");
-        transferencia.setAutorizacion(true);
-
-        serviceTransaccion.agregarTransaccion(transferencia);
-
-        System.out.println("Transacciones registradas correctamente.");
+        // 3. Actualizar estado del préstamo (ejemplo)
+        if (!prestamos.isEmpty()) {
+            int idActualizar = prestamos.get(0).getIdPrestamo();
+            boolean actualizado = service.actualizarEstado(idActualizar, "mora");
+            System.out.println("\nActualización del estado del préstamo con ID " + idActualizar + ": " + (actualizado ? "Éxito" : "Error"));
+        }
     }
-}
+}*/

@@ -1,7 +1,6 @@
 package model;
 
-import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 
 public class Cuota {
 
@@ -9,22 +8,21 @@ public class Cuota {
     private int idPrestamo;
     private int nroCuota;
     private Date fechaVencimiento;
-    private BigDecimal montoCuota;
+    private double montoCuota;
     private String estado; // pendiente, pagada, mora
 
     public Cuota() {
     }
 
-    public Cuota(int idCuota, int idPrestamo, int nroCuota, BigDecimal montoCuota, Date fechaVencimiento, String estado) {
+    public Cuota(int idCuota, int idPrestamo, int nroCuota, Date fechaVencimiento, double montoCuota, String estado) {
         this.idCuota = idCuota;
         this.idPrestamo = idPrestamo;
         this.nroCuota = nroCuota;
-        this.montoCuota = montoCuota;
         this.fechaVencimiento = fechaVencimiento;
+        this.montoCuota = montoCuota;
         this.estado = estado;
     }
 
-    // Getters y Setters
     public int getIdCuota() {
         return idCuota;
     }
@@ -57,11 +55,11 @@ public class Cuota {
         this.fechaVencimiento = fechaVencimiento;
     }
 
-    public BigDecimal getMontoCuota() {
+    public double getMontoCuota() {
         return montoCuota;
     }
 
-    public void setMontoCuota(BigDecimal montoCuota) {
+    public void setMontoCuota(double montoCuota) {
         this.montoCuota = montoCuota;
     }
 
@@ -72,4 +70,6 @@ public class Cuota {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+
+    
 }
