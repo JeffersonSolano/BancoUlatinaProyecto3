@@ -1,7 +1,11 @@
+C:\Users\victo\Documents\NetBeansProjects\BancoUlatinaProyecto3\BancoUlatinaProyecto3\src\main\java\Main\test.java
 C:\Users\victo\Documents\NetBeansProjects\BancoUlatinaProyecto3\BancoUlatinaProyecto3\src\main\java\model\Cliente.java
 C:\Users\victo\Documents\NetBeansProjects\BancoUlatinaProyecto3\BancoUlatinaProyecto3\src\main\java\service\ServiceTransaccion.java
 C:\Users\victo\Documents\NetBeansProjects\BancoUlatinaProyecto3\BancoUlatinaProyecto3\src\main\java\service\ConexionBD.java
+C:\Users\victo\Documents\NetBeansProjects\BancoUlatinaProyecto3\BancoUlatinaProyecto3\src\main\java\model\Prestamo.java
 C:\Users\victo\Documents\NetBeansProjects\BancoUlatinaProyecto3\BancoUlatinaProyecto3\src\main\java\controller\CuentaController.java
+C:\Users\victo\Documents\NetBeansProjects\BancoUlatinaProyecto3\BancoUlatinaProyecto3\src\main\java\model\Cuota.java
+C:\Users\victo\Documents\NetBeansProjects\BancoUlatinaProyecto3\BancoUlatinaProyecto3\src\main\java\service\ServicePrestamo.java
 C:\Users\victo\Documents\NetBeansProjects\BancoUlatinaProyecto3\BancoUlatinaProyecto3\src\main\java\model\TransferenciaExterna.java
 C:\Users\victo\Documents\NetBeansProjects\BancoUlatinaProyecto3\BancoUlatinaProyecto3\src\main\java\model\Asiento.java
 C:\Users\victo\Documents\NetBeansProjects\BancoUlatinaProyecto3\BancoUlatinaProyecto3\src\main\java\model\Cuenta.java
@@ -13,4 +17,5 @@ C:\Users\victo\Documents\NetBeansProjects\BancoUlatinaProyecto3\BancoUlatinaProy
 C:\Users\victo\Documents\NetBeansProjects\BancoUlatinaProyecto3\BancoUlatinaProyecto3\src\main\java\model\Transaccion.java
 C:\Users\victo\Documents\NetBeansProjects\BancoUlatinaProyecto3\BancoUlatinaProyecto3\src\main\java\controller\ClienteController.java
 C:\Users\victo\Documents\NetBeansProjects\BancoUlatinaProyecto3\BancoUlatinaProyecto3\src\main\java\controller\TransaccionController.java
+C:\Users\victo\Documents\NetBeansProjects\BancoUlatinaProyecto3\BancoUlatinaProyecto3\src\main\java\controller\PrestamoController.java
 C:\Users\victo\Documents\NetBeansProjects\BancoUlatinaProyecto3\BancoUlatinaProyecto3\src\main\java\service\ServiceCliente.java

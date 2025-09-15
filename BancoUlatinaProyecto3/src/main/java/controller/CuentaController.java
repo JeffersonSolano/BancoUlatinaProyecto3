@@ -9,7 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-@ManagedBean
+@ManagedBean(name = "cuentaController") // Aseguramos el nombre correcto
 @SessionScoped
 public class CuentaController implements Serializable {
 
@@ -48,34 +48,43 @@ public class CuentaController implements Serializable {
     public String agregarCuenta() {
         ServiceCuenta service = new ServiceCuenta();
 
-        // Generar código de cuenta automáticamente
-        String codigo = service.generarCodigoCuenta(cedulaCliente);
-        cuentaNueva.setCodigoCuenta(codigo);
+        // Asegurarse que todos los campos tipo ENUM estén en minúscula
+        if (cuentaNueva.getEstado() != null) {
+            cuentaNueva.setEstado(cuentaNueva.getEstado().toLowerCase());
+        }
+        if (cuentaNueva.getTipoCuenta() != null) {
+            cuentaNueva.setTipoCuenta(cuentaNueva.getTipoCuenta().toLowerCase());
+        }
+        if (cuentaNueva.getMoneda() != null) {
+            cuentaNueva.setMoneda(cuentaNueva.getMoneda().toUpperCase()); // opcional: moneda siempre en mayúscula
+        }
+
+        // Asignar cédula y generar código de cuenta
         cuentaNueva.setIdCliente(cedulaCliente);
+        cuentaNueva.setCodigoCuenta(service.generarCodigoCuenta());
 
         // Insertar la cuenta en la base de datos
         boolean exito = service.agregarCuenta(cuentaNueva);
-        if (!exito) {
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+
+        // Mensaje según resultado
+        FacesMessage msg;
+        if (exito) {
+            msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "Éxito",
+                    "Cuenta agregada correctamente. Código: " + cuentaNueva.getCodigoCuenta());
+
+            // Recargar lista y limpiar formulario
+            cuentas = service.listarCuentas();
+            cuentaNueva = new Cuenta();
+            cedulaCliente = 0;
+
+        } else {
+            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     "Error",
-                    "No se pudo agregar la cuenta.");
-            FacesContext.getCurrentInstance().addMessage(null, msg);
-            return null; // permanecer en la misma página
+                    "No se pudo agregar la cuenta. Revise los datos ingresados.");
         }
 
-        // Recargar la lista de cuentas
-        cuentas = service.listarCuentas();
-
-        // Limpiar formulario
-        cuentaNueva = new Cuenta();
-        cedulaCliente = 0;
-
-        // Mensaje de éxito
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
-                "Éxito",
-                "Cuenta agregada correctamente. Código: " + codigo);
         FacesContext.getCurrentInstance().addMessage(null, msg);
-
         return null; // permanecer en la misma página
     }
 }

@@ -7,26 +7,21 @@ public class Cuenta {
 
     private int idCuentasClientes;  // PK interna
     private int idCliente;          // FK hacia clientes.cedula
-    private String codigoCuenta;    // Identificador por cliente (001, 002, ...)
     private String tipoCuenta;      // ahorro / corriente
     private String moneda;          // CRC / USD
-    private BigDecimal saldo;
+    private Double saldo;
     private String estado;          // activa / bloqueada / cerrada
-    private BigDecimal interes;
-    private BigDecimal comision;
+    private Double interes;
+    private Double comision;
     private Date fechaApertura;
+    private String codigoCuenta;    // Identificador por cliente (001, 002, ...)
 
-    // Constructor vacío
-    public Cuenta() {}
+    public Cuenta() {
+    }
 
-    // Constructor completo
-    public Cuenta(int idCuentasClientes, int idCliente, String codigoCuenta,
-                  String tipoCuenta, String moneda, BigDecimal saldo,
-                  String estado, BigDecimal interes, BigDecimal comision,
-                  Date fechaApertura) {
+    public Cuenta(int idCuentasClientes, int idCliente, String tipoCuenta, String moneda, Double saldo, String estado, Double interes, Double comision, Date fechaApertura, String codigoCuenta) {
         this.idCuentasClientes = idCuentasClientes;
         this.idCliente = idCliente;
-        this.codigoCuenta = codigoCuenta;
         this.tipoCuenta = tipoCuenta;
         this.moneda = moneda;
         this.saldo = saldo;
@@ -34,9 +29,9 @@ public class Cuenta {
         this.interes = interes;
         this.comision = comision;
         this.fechaApertura = fechaApertura;
+        this.codigoCuenta = codigoCuenta;
     }
 
-    // Getters y setters
     public int getIdCuentasClientes() {
         return idCuentasClientes;
     }
@@ -51,14 +46,6 @@ public class Cuenta {
 
     public void setIdCliente(int idCliente) {
         this.idCliente = idCliente;
-    }
-
-    public String getCodigoCuenta() {
-        return codigoCuenta;
-    }
-
-    public void setCodigoCuenta(String codigoCuenta) {
-        this.codigoCuenta = codigoCuenta;
     }
 
     public String getTipoCuenta() {
@@ -77,11 +64,11 @@ public class Cuenta {
         this.moneda = moneda;
     }
 
-    public BigDecimal getSaldo() {
+    public Double getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(BigDecimal saldo) {
+    public void setSaldo(Double saldo) {
         this.saldo = saldo;
     }
 
@@ -93,19 +80,19 @@ public class Cuenta {
         this.estado = estado;
     }
 
-    public BigDecimal getInteres() {
+    public Double getInteres() {
         return interes;
     }
 
-    public void setInteres(BigDecimal interes) {
+    public void setInteres(Double interes) {
         this.interes = interes;
     }
 
-    public BigDecimal getComision() {
+    public Double getComision() {
         return comision;
     }
 
-    public void setComision(BigDecimal comision) {
+    public void setComision(Double comision) {
         this.comision = comision;
     }
 
@@ -116,4 +103,16 @@ public class Cuenta {
     public void setFechaApertura(Date fechaApertura) {
         this.fechaApertura = fechaApertura;
     }
+
+    public String getCodigoCuenta() {
+        return codigoCuenta;
+    }
+
+    public void setCodigoCuenta(String codigoCuenta) {
+        this.codigoCuenta = codigoCuenta;
+    }
+
+    
+    
+    
 }

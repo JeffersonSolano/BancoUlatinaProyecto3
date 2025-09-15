@@ -1,8 +1,10 @@
-service\ServiceTransaccion.class
+main\test.class
 model\Cuenta.class
 service\ServiceCuenta.class
-controller\TransaccionController.class
+model\Cuota.class
+controller\PrestamoController.class
 model\Asiento.class
+model\Prestamo.class
 service\ConexionBD.class
 service\ServiceAsiento.class
 model\Transaccion.class
@@ -13,4 +15,5 @@ controller\AsientoController.class
 controller\TransferenciaExternaController.class
 controller\CuentaController.class
 service\ServiceCliente.class
+service\ServicePrestamo.class
 service\ServiceTransferenciaExterna.class

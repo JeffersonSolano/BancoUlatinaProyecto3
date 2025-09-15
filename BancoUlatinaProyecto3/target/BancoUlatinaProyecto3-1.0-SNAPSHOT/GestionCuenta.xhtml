@@ -9,23 +9,23 @@
 </h:head>
 <h:body>
 
-    <!-- Menú superior -->
-    <h:form>
+    <h:form id="formCuentas">
+
+        <!-- Menú superior -->
         <p:menubar>
             <p:menuitem value="Inicio" url="index.xhtml" icon="pi pi-home" />
-            
             <p:submenu label="Clientes" icon="pi pi-users">
                 <p:menuitem value="Gestionar Clientes" url="GestionCliente.xhtml" icon="pi pi-user-plus" />
             </p:submenu>
-
-            <p:submenu label="Cuenta" icon="pi pi-users">
+            <p:submenu label="Cuentas" icon="pi pi-wallet">
                 <p:menuitem value="Gestionar Cuenta" url="GestionCuenta.xhtml" icon="pi pi-user-plus" />
             </p:submenu>
         </p:menubar>
-    </h:form>
 
-    <!-- Formulario para agregar cuenta -->
-    <h:form>
+        <!-- Mensajes de éxito/error -->
+        <p:growl id="msgs" showDetail="true" life="3000" />
+
+        <!-- Formulario para agregar cuenta -->
         <p:panel header="Agregar Cuenta">
             <h:panelGrid columns="2" columnClasses="label,value">
 
@@ -47,13 +47,19 @@
                 </p:selectOneMenu>
 
                 <h:outputLabel value="Saldo Inicial:"/>
-                <p:inputText value="#{cuentaController.cuentaNueva.saldo}" required="true" label="Saldo Inicial" />
+                <p:inputText value="#{cuentaController.cuentaNueva.saldo}" required="true" label="Saldo Inicial">
+                    <f:convertNumber />
+                </p:inputText>
 
                 <h:outputLabel value="Interés:"/>
-                <p:inputText value="#{cuentaController.cuentaNueva.interes}" required="true" label="Interés" />
+                <p:inputText value="#{cuentaController.cuentaNueva.interes}" required="true" label="Interés">
+                    <f:convertNumber />
+                </p:inputText>
 
                 <h:outputLabel value="Comisión:"/>
-                <p:inputText value="#{cuentaController.cuentaNueva.comision}" required="true" label="Comisión" />
+                <p:inputText value="#{cuentaController.cuentaNueva.comision}" required="true" label="Comisión">
+                    <f:convertNumber />
+                </p:inputText>
 
                 <h:outputLabel value="Estado:"/>
                 <p:selectOneMenu value="#{cuentaController.cuentaNueva.estado}" required="true" label="Estado">
@@ -65,15 +71,14 @@
 
                 <h:outputLabel value="Fecha de Apertura:"/>
                 <p:datePicker value="#{cuentaController.cuentaNueva.fechaApertura}" pattern="yyyy-MM-dd" required="true" />
-                
+
             </h:panelGrid>
 
-            <p:commandButton value="Agregar Cuenta" 
-                             action="#{cuentaController.agregarCuenta}" 
-                             update="msgs, cuentasTable" />
+            <p:commandButton value="Agregar Cuenta"
+                             action="#{cuentaController.agregarCuenta}"
+                             update="msgs, cuentasTable"
+                             process="@form" />
         </p:panel>
-
-        <p:growl id="msgs" showDetail="true" life="3000" />
 
         <!-- Tabla de cuentas -->
         <p:panel header="Lista de Cuentas">
@@ -88,10 +93,6 @@
                     <h:outputText value="#{c.idCliente}" />
                 </p:column>
 
-                <p:column headerText="Código Cuenta">
-                    <h:outputText value="#{c.codigoCuenta}" />
-                </p:column>
-
                 <p:column headerText="Tipo">
                     <h:outputText value="#{c.tipoCuenta}" />
                 </p:column>
@@ -101,15 +102,21 @@
                 </p:column>
 
                 <p:column headerText="Saldo">
-                    <h:outputText value="#{c.saldo}" />
+                    <h:outputText value="#{c.saldo}">
+                        <f:convertNumber type="number" />
+                    </h:outputText>
                 </p:column>
 
                 <p:column headerText="Interés">
-                    <h:outputText value="#{c.interes}" />
+                    <h:outputText value="#{c.interes}">
+                        <f:convertNumber type="number" />
+                    </h:outputText>
                 </p:column>
 
                 <p:column headerText="Comisión">
-                    <h:outputText value="#{c.comision}" />
+                    <h:outputText value="#{c.comision}">
+                        <f:convertNumber type="number" />
+                    </h:outputText>
                 </p:column>
 
                 <p:column headerText="Estado">
@@ -117,11 +124,18 @@
                 </p:column>
 
                 <p:column headerText="Fecha Apertura">
-                    <h:outputText value="#{c.fechaApertura}" />
+                    <h:outputText value="#{c.fechaApertura}">
+                        <f:convertDateTime pattern="yyyy-MM-dd" />
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="Código Cuenta">
+                    <h:outputText value="#{c.codigoCuenta}" />
                 </p:column>
 
             </p:dataTable>
         </p:panel>
+
     </h:form>
 
 </h:body>
