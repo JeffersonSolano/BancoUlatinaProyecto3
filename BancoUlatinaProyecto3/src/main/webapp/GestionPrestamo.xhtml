@@ -7,9 +7,11 @@
 <h:head>
     <title>Gestión de Préstamos</title>
 </h:head>
-<h:body>
 
-<h:form>
+<h:body>
+<h:form id="formPrestamos">
+
+    <!-- Formulario de solicitud -->
     <p:panel header="Solicitar Préstamo">
         <h:panelGrid columns="2" cellpadding="5">
             <h:outputLabel value="Cédula del Cliente:" />
@@ -33,15 +35,16 @@
 
         <p:commandButton value="Solicitar Préstamo"
                          action="#{prestamoController.agregarPrestamo}"
-                         update="msgs, prestamosTable" />
+                         update="msgs, prestamosTable, cuotasTable" />
     </p:panel>
 
     <p:growl id="msgs" showDetail="true" life="3000" />
 
-    <p:panel header="Lista de Préstamos">
+    <!-- Tabla de préstamos -->
+    <p:panel header="Lista de Préstamos" style="margin-top:20px;">
         <p:dataTable id="prestamosTable" value="#{prestamoController.prestamos}" var="p"
-                     selection="#{prestamoController.prestamoSeleccionado}" selectionMode="single"
-                     rowKey="#{p.idPrestamo}" paginator="true" rows="10">
+                     paginator="true" rows="10">
+
             <p:column headerText="ID Préstamo">
                 <h:outputText value="#{p.idPrestamo}" />
             </p:column>
@@ -63,9 +66,39 @@
             <p:column headerText="Estado">
                 <h:outputText value="#{p.estado}" />
             </p:column>
+
+            <!-- Columna de acción: Ver Cuotas -->
+            <p:column headerText="Acciones">
+                <p:commandButton value="Ver Cuotas"
+                                 action="#{prestamoController.verCuotas(p)}"
+                                 update=":formPrestamos:cuotasTable" />
+            </p:column>
+
         </p:dataTable>
     </p:panel>
-</h:form>
 
+    <!-- Tabla de cuotas -->
+    <p:panel header="Cuotas del Préstamo Seleccionado" style="margin-top:20px;">
+        <p:dataTable id="cuotasTable" value="#{prestamoController.cuotas}" var="c"
+                     paginator="true" rows="12">
+
+            <p:column headerText="Nro Cuota">
+                <h:outputText value="#{c.nroCuota}" />
+            </p:column>
+            <p:column headerText="Fecha Vencimiento">
+                <h:outputText value="#{c.fechaVencimiento}">
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>
+            </p:column>
+            <p:column headerText="Monto Cuota">
+                <h:outputText value="#{c.montoCuota}" />
+            </p:column>
+            <p:column headerText="Estado">
+                <h:outputText value="#{c.estado}" />
+            </p:column>
+        </p:dataTable>
+    </p:panel>
+
+</h:form>
 </h:body>
 </html>

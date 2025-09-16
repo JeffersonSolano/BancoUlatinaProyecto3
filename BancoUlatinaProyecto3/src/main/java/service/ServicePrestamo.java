@@ -16,16 +16,27 @@ public class ServicePrestamo {
         try (Connection con = ConexionBD.getConnection();
              PreparedStatement psPrestamo = con.prepareStatement(sqlPrestamo, Statement.RETURN_GENERATED_KEYS)) {
 
+            // Asegurarse de que fecha y estado estén inicializados
+            if (p.getFechaSolicitud() == null) {
+                p.setFechaSolicitud(new java.util.Date());
+            }
+            if (p.getEstado() == null || p.getEstado().isEmpty()) {
+                p.setEstado("activo");
+            }
+
             psPrestamo.setInt(1, p.getIdCliente());
             psPrestamo.setString(2, p.getTipo());
             psPrestamo.setDouble(3, p.getMonto());
             psPrestamo.setInt(4, p.getPlazoMeses());
             psPrestamo.setDouble(5, p.getTasaInteres());
-            psPrestamo.setDate(6, new java.sql.Date(p.getFechaSolicitud().getTime())); // java.util.Date → java.sql.Date
+            psPrestamo.setDate(6, new java.sql.Date(p.getFechaSolicitud().getTime()));
             psPrestamo.setString(7, p.getEstado());
 
             int affectedRows = psPrestamo.executeUpdate();
-            if (affectedRows == 0) return false;
+            if (affectedRows == 0) {
+                System.err.println("No se pudo insertar el préstamo.");
+                return false;
+            }
 
             // Obtener ID generado
             int idPrestamo = 0;
@@ -39,12 +50,13 @@ public class ServicePrestamo {
             return true;
 
         } catch (SQLException e) {
+            System.err.println("Error al insertar préstamo: " + e.getMessage());
             e.printStackTrace();
             return false;
         }
     }
 
-    // Generar cuotas (cuota fija sistema francés)
+    // Generar cuotas (sistema francés, cuotas fijas)
     private void generarCuotas(Connection con, int idPrestamo, Prestamo p) throws SQLException {
         String sqlCuota = "INSERT INTO cuotas (id_prestamo, nro_cuota, fecha_vencimiento, monto_cuota, estado) "
                 + "VALUES (?, ?, ?, ?, ?)";
@@ -54,22 +66,27 @@ public class ServicePrestamo {
             int plazo = p.getPlazoMeses();
             double tasaMensual = p.getTasaInteres() / 12 / 100;
 
-            // Fórmula cuota fija
+            // Fórmula de cuota fija
             double factor = (tasaMensual * Math.pow(1 + tasaMensual, plazo)) /
                             (Math.pow(1 + tasaMensual, plazo) - 1);
             double cuotaFija = Math.round(monto * factor * 100.0) / 100.0;
 
             Calendar cal = Calendar.getInstance();
+
             for (int i = 1; i <= plazo; i++) {
                 cal.add(Calendar.MONTH, 1);
                 ps.setInt(1, idPrestamo);
                 ps.setInt(2, i);
-                ps.setDate(3, new java.sql.Date(cal.getTimeInMillis())); // fecha_vencimiento
-                ps.setDouble(4, cuotaFija); // monto_cuota
+                ps.setDate(3, new java.sql.Date(cal.getTimeInMillis()));
+                ps.setDouble(4, cuotaFija);
                 ps.setString(5, "pendiente");
                 ps.addBatch();
+                System.out.println("Generando cuota " + i + " para préstamo " + idPrestamo + " monto: " + cuotaFija);
+
             }
             ps.executeBatch();
+            System.out.println("ID Prestamo generado: " + idPrestamo);
+
         }
     }
 
@@ -97,6 +114,7 @@ public class ServicePrestamo {
             }
 
         } catch (SQLException e) {
+            System.err.println("Error al listar préstamos: " + e.getMessage());
             e.printStackTrace();
         }
         return lista;
@@ -126,6 +144,7 @@ public class ServicePrestamo {
             }
 
         } catch (SQLException e) {
+            System.err.println("Error al listar cuotas: " + e.getMessage());
             e.printStackTrace();
         }
 
