@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit this template
+-->
+<!-- /WEB-INF/plantillas/SidebarLateral.xhtml -->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <h:head>
+        <title><ui:insert name="title">Sistema de Administración</ui:insert></title>
+
+        <!-- Estilos del sidebar (puedes mover esto a resources/css luego) -->
+        <style>
+            body {
+                margin: 0;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background-color: #f9fafb;
+                color: #1f2937;
+            }
+
+            /* Botón hamburguesa */
+            .menu-btn {
+                position: fixed;
+                top: 16px;
+                left: 16px;
+                font-size: 22px;
+                cursor: pointer;
+                color: #111827;
+                background: #fff;
+                border-radius: 8px;
+                padding: 8px 12px;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+                z-index: 1001;
+                transition: background 0.2s;
+            }
+            .menu-btn:hover {
+                background: #f3f4f6;
+            }
+
+            /* Sidebar */
+            .sidebar {
+                height: 100%;
+                width: 260px;
+                position: fixed;
+                top: 0;
+                left: -260px;
+                background-color: #ffffff; /* Blando y minimalista */
+                padding-top: 60px;
+                transition: left 0.28s cubic-bezier(.2,.9,.3,1);
+                z-index: 1000;
+                box-shadow: 2px 0 10px rgba(0,0,0,0.06);
+                border-right: 1px solid rgba(16,24,40,0.03);
+            }
+
+            .sidebar a {
+                display: block;
+                padding: 14px 24px;
+                text-decoration: none;
+                color: #374151;
+                font-size: 18px;
+                border-radius: 8px;
+                margin: 6px 12px;
+                transition: background 0.18s, color 0.18s;
+            }
+
+            .sidebar a:hover {
+                background-color: #f3f4f6;
+                color: #0f62d0;
+            }
+
+            .sidebar.active {
+                left: 0;
+            }
+
+            /* Contenido principal (se desplaza si quieres) */
+            .content {
+                margin-left: 0;
+                padding: 60px 24px 24px 24px;
+                transition: margin-left 0.28s cubic-bezier(.2,.9,.3,1);
+            }
+            .content.shifted {
+                margin-left: 260px;
+            }
+
+            /* Título / header */
+            .page-header {
+                position: relative;
+                z-index: 0;
+                display:flex;
+                align-items:center;
+                gap:12px;
+                margin-bottom:18px;
+            }
+            .page-header h1 {
+                margin:0;
+                font-size: 22px;
+                color:#111827;
+            }
+        </style>
+
+        <!-- Si usas recursos externos, puedes incluirlos aquí con h:outputStylesheet -->
+    </h:head>
+
+    <h:body>
+        <!-- Botón hamburguesa -->
+        <button type="button" class="menu-btn" onclick="toggleMenu()" aria-label="Abrir menú">☰</button>
+
+        <!-- Sidebar (links) -->
+        <nav class="sidebar" role="navigation" aria-label="Sidebar principal">
+            <a href="#{request.contextPath}/index.xhtml">🏠 Inicio</a>
+            <a href="#{request.contextPath}/GestionCliente.xhtml">👤 Clientes</a>
+            <a href="#{request.contextPath}/GestionCuenta.xhtml">💳 Cuentas</a>
+            <a href="#{request.contextPath}/GestionTransaccion.xhtml">💸 Transacciones</a>
+            <a href="#{request.contextPath}/AsientosContables.xhtml">📘 Asientos Contables</a>
+            <a href="#{request.contextPath}/GestionPrestamo.xhtml">📄 Préstamos</a>
+        </nav>
+
+        <!-- Zona donde cada página inyectará su contenido -->
+        <main class="content" role="main">
+            <ui:insert name="content">
+                <!-- contenido por defecto si no se define -->
+                <div class="page-header"><h1>Bienvenido</h1></div>
+                <p>Use el menú para navegar.</p>
+            </ui:insert>
+        </main>
+
+        <script type="text/javascript">
+            function toggleMenu() {
+                var sb = document.querySelector('.sidebar');
+                var ct = document.querySelector('.content');
+                if (!sb || !ct)
+                    return;
+                sb.classList.toggle('active');
+                ct.classList.toggle('shifted');
+            }
+        </script>
+    </h:body>
+</html>

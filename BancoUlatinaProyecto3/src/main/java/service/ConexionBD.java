@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class ConexionBD {
     private static final String URL = "jdbc:mysql://localhost:3306/bancoulatina?serverTimezone=UTC";
     private static final String USER = "root";
-    private static final String PASS = "1221"; 
+    private static final String PASS = "adminadmin"; 
 
    public static Connection getConnection() {
         try {

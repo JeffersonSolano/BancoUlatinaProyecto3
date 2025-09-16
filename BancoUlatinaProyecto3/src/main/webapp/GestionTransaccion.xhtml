@@ -2,121 +2,121 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-<h:head>
-    <title>Gestión de Transacciones</title>
-</h:head>
+    <ui:composition template="/WEB-INF/plantillas/SidebarLateral.xhtml">
 
-<h:body>
+        <!-- Definimos el título de la página -->
+        <ui:define name="title">
+            Gestión de Transacciones
+        </ui:define>
 
-    <!-- Menú superior -->
-    <h:form>
-        <p:menubar>
-            <p:menuitem value="Inicio" url="index.xhtml" icon="pi pi-home" />
+        <!-- Definimos el contenido principal -->
+        <ui:define name="content">
 
-            <p:submenu label="Clientes" icon="pi pi-users">
-                <p:menuitem value="Gestionar Clientes" url="GestionCliente.xhtml" icon="pi pi-user-plus" />
-            </p:submenu>
+            <h:form id="transaccionForm">
 
-            <p:submenu label="Cuentas" icon="pi pi-wallet">
-                <p:menuitem value="Gestionar Cuentas" url="GestionCuenta.xhtml" icon="pi pi-user-plus" />
-            </p:submenu>
+                <!-- Panel para nueva transacción -->
+                <p:panel header="Nueva Transacción" style="width:100%;">
+                    <h:panelGrid columns="2" columnClasses="labelCol,valueCol" style="width:100%;" cellpadding="5">
 
-            <p:submenu label="Transacciones" icon="pi pi-exchange">
-                <p:menuitem value="Realizar Transacción" url="GestionTransaccion.xhtml" icon="pi pi-send" />
-            </p:submenu>
-        </p:menubar>
-    </h:form>
+                        <h:outputLabel value="Cuenta Origen (Código):" for="codigoOrigen" style="text-align:right; width:40%;" />
+                        <p:outputPanel>
+                            <p:inputText id="codigoOrigen" value="#{transaccionController.transaccionNueva.codigoCuentaOrigen}" required="true" style="width:95%;">
+                                <f:validateLength minimum="1"/>
+                            </p:inputText>
+                            <p:message for="codigoOrigen" />
+                        </p:outputPanel>
 
-    <h:form id="transaccionForm">
+                        <h:outputLabel value="Cuenta Destino (Código, solo para transferencia):" for="codigoDestino" style="text-align:right; width:40%;" />
+                        <p:outputPanel>
+                            <p:inputText id="codigoDestino" value="#{transaccionController.transaccionNueva.codigoCuentaDestino}" style="width:95%;">
+                                <f:validateLength minimum="1"/>
+                            </p:inputText>
+                            <p:message for="codigoDestino" />
+                        </p:outputPanel>
 
-        <!-- Panel para nueva transacción -->
-        <p:panel header="Nueva Transacción">
-            <h:panelGrid columns="2" columnClasses="label,value">
+                        <h:outputLabel value="Tipo de Transacción:" for="tipoTransaccion" style="text-align:right; width:40%;" />
+                        <p:outputPanel>
+                            <p:selectOneMenu id="tipoTransaccion" value="#{transaccionController.transaccionNueva.tipo}" required="true" style="width:95%;">
+                                <f:selectItem itemLabel="Seleccione" itemValue="" />
+                                <f:selectItem itemLabel="Depósito" itemValue="deposito" />
+                                <f:selectItem itemLabel="Retiro" itemValue="retiro" />
+                                <f:selectItem itemLabel="Transferencia" itemValue="transferencia" />
+                            </p:selectOneMenu>
+                            <p:message for="tipoTransaccion" />
+                        </p:outputPanel>
 
-                <h:outputLabel value="Cuenta Origen (Código):" for="codigoOrigen"/>
-                <p:inputText id="codigoOrigen" value="#{transaccionController.transaccionNueva.codigoCuentaOrigen}" required="true">
-                    <f:validateLength minimum="1"/>
-                </p:inputText>
-                <p:message for="codigoOrigen" />
+                        <h:outputLabel value="Monto:" for="monto" style="text-align:right; width:40%;" />
+                        <p:outputPanel>
+                            <p:inputText id="monto" value="#{transaccionController.transaccionNueva.monto}" required="true" style="width:95%;">
+                                <f:validateDoubleRange minimum="0.01" />
+                            </p:inputText>
+                            <p:message for="monto" />
+                        </p:outputPanel>
 
-                <h:outputLabel value="Cuenta Destino (Código, solo para transferencia):" for="codigoDestino"/>
-                <p:inputText id="codigoDestino" value="#{transaccionController.transaccionNueva.codigoCuentaDestino}">
-                    <f:validateLength minimum="1"/>
-                </p:inputText>
-                <p:message for="codigoDestino" />
+                        <h:outputLabel value="Descripción:" for="descripcion" style="text-align:right; width:40%;" />
+                        <p:outputPanel>
+                            <p:inputText id="descripcion" value="#{transaccionController.transaccionNueva.descripcion}" style="width:95%;" />
+                            <p:message for="descripcion" />
+                        </p:outputPanel>
 
-                <h:outputLabel value="Tipo de Transacción:" for="tipoTransaccion"/>
-                <p:selectOneMenu id="tipoTransaccion" value="#{transaccionController.transaccionNueva.tipo}" required="true">
-                    <f:selectItem itemLabel="Seleccione" itemValue="" />
-                    <f:selectItem itemLabel="Depósito" itemValue="deposito" />
-                    <f:selectItem itemLabel="Retiro" itemValue="retiro" />
-                    <f:selectItem itemLabel="Transferencia" itemValue="transferencia" />
-                </p:selectOneMenu>
-                <p:message for="tipoTransaccion" />
+                    </h:panelGrid>
 
-                <h:outputLabel value="Monto:" for="monto"/>
-                <p:inputText id="monto" value="#{transaccionController.transaccionNueva.monto}" required="true">
-                    <f:validateDoubleRange minimum="0.01" />
-                </p:inputText>
-                <p:message for="monto" />
+                    <p:commandButton value="Realizar Transacción"
+                                     action="#{transaccionController.agregarTransaccion}"
+                                     update="msgs, transaccionesTable, @form" style="margin-top:10px;" />
+                </p:panel>
 
-                <h:outputLabel value="Descripción:" for="descripcion"/>
-                <p:inputText id="descripcion" value="#{transaccionController.transaccionNueva.descripcion}" />
-                <p:message for="descripcion" />
 
-            </h:panelGrid>
 
-            <p:commandButton value="Realizar Transacción"
-                             action="#{transaccionController.agregarTransaccion}"
-                             update="msgs, transaccionesTable, @form" />
-        </p:panel>
+                <!-- Mensajes globales -->
+                <p:growl id="msgs" showDetail="true" life="4000" />
 
-        <!-- Mensajes globales -->
-        <p:growl id="msgs" showDetail="true" life="4000" />
+                <!-- Historial de transacciones -->
+                <p:panel header="Historial de Transacciones" style="margin-top:20px;">
+                    <p:dataTable id="transaccionesTable" value="#{transaccionController.transacciones}" var="t"
+                                 emptyMessage="No hay transacciones registradas">
 
-        <!-- Historial de transacciones -->
-        <p:panel header="Historial de Transacciones" style="margin-top:20px;">
-            <p:dataTable id="transaccionesTable" value="#{transaccionController.transacciones}" var="t"
-                         emptyMessage="No hay transacciones registradas">
+                        <p:column headerText="ID Transacción">
+                            <h:outputText value="#{t.idTransaccion}" />
+                        </p:column>
 
-                <p:column headerText="ID Transacción">
-                    <h:outputText value="#{t.idTransaccion}" />
-                </p:column>
+                        <p:column headerText="Código Cuenta Origen">
+                            <h:outputText value="#{t.codigoCuentaOrigen}" />
+                        </p:column>
 
-                <p:column headerText="Código Cuenta Origen">
-                    <h:outputText value="#{t.codigoCuentaOrigen}" />
-                </p:column>
+                        <p:column headerText="Código Cuenta Destino">
+                            <h:outputText value="#{t.codigoCuentaDestino}" />
+                        </p:column>
 
-                <p:column headerText="Código Cuenta Destino">
-                    <h:outputText value="#{t.codigoCuentaDestino}" />
-                </p:column>
+                        <p:column headerText="Tipo">
+                            <h:outputText value="#{t.tipo}" />
+                        </p:column>
 
-                <p:column headerText="Tipo">
-                    <h:outputText value="#{t.tipo}" />
-                </p:column>
+                        <p:column headerText="Monto">
+                            <h:outputText value="#{t.monto}" />
+                        </p:column>
 
-                <p:column headerText="Monto">
-                    <h:outputText value="#{t.monto}" />
-                </p:column>
+                        <p:column headerText="Fecha">
+                            <h:outputText value="#{t.fecha}" />
+                        </p:column>
 
-                <p:column headerText="Fecha">
-                    <h:outputText value="#{t.fecha}" />
-                </p:column>
+                        <p:column headerText="Estado">
+                            <h:outputText value="#{t.estado}" />
+                        </p:column>
 
-                <p:column headerText="Estado">
-                    <h:outputText value="#{t.estado}" />
-                </p:column>
+                        <p:column headerText="Descripción">
+                            <h:outputText value="#{t.descripcion}" />
+                        </p:column>
 
-                <p:column headerText="Descripción">
-                    <h:outputText value="#{t.descripcion}" />
-                </p:column>
+                    </p:dataTable>
+                </p:panel>
 
-            </p:dataTable>
-        </p:panel>
+            </h:form>
 
-    </h:form>
+        </ui:define>
 
-</h:body>
+    </ui:composition>
 </html>

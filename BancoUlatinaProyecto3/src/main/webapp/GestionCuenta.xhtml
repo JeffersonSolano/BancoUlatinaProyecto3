@@ -1,68 +1,60 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/plantillas/SidebarLateral.xhtml">
 
-    <h:head>
-        <title>Gestión de Cuentas</title>
-    </h:head>
-    <h:body>
+    <ui:define name="title">Gestión de Cuentas</ui:define>
+
+    <ui:define name="content">
+        <div class="page-header">
+            <h1>Gestión de Cuentas</h1>
+        </div>
 
         <h:form id="formCuentas">
 
-            <!-- Menú superior -->
-            <p:menubar>
-                <p:menuitem value="Inicio" url="index.xhtml" icon="pi pi-home" />
-                <p:submenu label="Clientes" icon="pi pi-users">
-                    <p:menuitem value="Gestionar Clientes" url="GestionCliente.xhtml" icon="pi pi-user-plus" />
-                </p:submenu>
-                <p:submenu label="Cuentas" icon="pi pi-wallet">
-                    <p:menuitem value="Gestionar Cuenta" url="GestionCuenta.xhtml" icon="pi pi-user-plus" />
-                </p:submenu>
-            </p:menubar>
-
-            <!-- Mensajes de éxito/error -->
             <p:growl id="msgs" showDetail="true" life="3000" />
 
             <!-- Formulario para agregar cuenta -->
             <p:panel header="Agregar Cuenta">
-                <h:panelGrid columns="2" columnClasses="label,value">
+                <h:panelGrid columns="4" columnClasses="label,value,label,value" cellpadding="5" style="width:100%;">
 
                     <h:outputLabel value="Cédula del Cliente:"/>
-                    <p:inputText value="#{cuentaController.cedulaCliente}" required="true" label="Cédula" />
+                    <p:inputText value="#{cuentaController.cedulaCliente}" required="true" label="Cédula" style="width:95%;" />
 
                     <h:outputLabel value="Tipo de Cuenta:"/>
-                    <p:selectOneMenu value="#{cuentaController.cuentaNueva.tipoCuenta}" required="true">
+                    <p:selectOneMenu value="#{cuentaController.cuentaNueva.tipoCuenta}" required="true" style="width:95%;">
                         <f:selectItem itemLabel="Seleccione" itemValue="" />
                         <f:selectItem itemLabel="Ahorro" itemValue="ahorro" />
                         <f:selectItem itemLabel="Corriente" itemValue="corriente" />
                     </p:selectOneMenu>
 
                     <h:outputLabel value="Moneda:"/>
-                    <p:selectOneMenu value="#{cuentaController.cuentaNueva.moneda}" required="true">
+                    <p:selectOneMenu value="#{cuentaController.cuentaNueva.moneda}" required="true" style="width:95%;">
                         <f:selectItem itemLabel="Seleccione" itemValue="" />
                         <f:selectItem itemLabel="CRC" itemValue="CRC" />
                         <f:selectItem itemLabel="USD" itemValue="USD" />
                     </p:selectOneMenu>
 
                     <h:outputLabel value="Saldo Inicial:"/>
-                    <p:inputText value="#{cuentaController.cuentaNueva.saldo}" required="true">
+                    <p:inputText value="#{cuentaController.cuentaNueva.saldo}" required="true" style="width:95%;">
                         <f:convertNumber />
                     </p:inputText>
 
                     <h:outputLabel value="Interés:"/>
-                    <p:inputText value="#{cuentaController.cuentaNueva.interes}" required="true">
+                    <p:inputText value="#{cuentaController.cuentaNueva.interes}" required="true" style="width:95%;">
                         <f:convertNumber />
                     </p:inputText>
 
                     <h:outputLabel value="Comisión:"/>
-                    <p:inputText value="#{cuentaController.cuentaNueva.comision}" required="true">
+                    <p:inputText value="#{cuentaController.cuentaNueva.comision}" required="true" style="width:95%;">
                         <f:convertNumber />
                     </p:inputText>
 
                     <h:outputLabel value="Estado:"/>
-                    <p:selectOneMenu value="#{cuentaController.cuentaNueva.estado}" required="true">
+                    <p:selectOneMenu value="#{cuentaController.cuentaNueva.estado}" required="true" style="width:95%;">
                         <f:selectItem itemLabel="Seleccione" itemValue="" />
                         <f:selectItem itemLabel="Activa" itemValue="activa" />
                         <f:selectItem itemLabel="Bloqueada" itemValue="bloqueada" />
@@ -70,20 +62,20 @@
                     </p:selectOneMenu>
 
                     <h:outputLabel value="Fecha de Apertura:"/>
-                    <p:datePicker value="#{cuentaController.cuentaNueva.fechaApertura}" pattern="yyyy-MM-dd" required="true"/>
+                    <p:datePicker value="#{cuentaController.cuentaNueva.fechaApertura}" pattern="yyyy-MM-dd" required="true" style="width:95%;"/>
                 </h:panelGrid>
 
                 <p:commandButton value="Agregar Cuenta"
                                  action="#{cuentaController.agregarCuenta}"
                                  update="msgs, cuentasTable"
-                                 process="@form" />
+                                 process="@form"
+                                 style="margin-top:10px;" />
             </p:panel>
 
-
             <!-- Tabla de cuentas -->
-            <p:panel header="Lista de Cuentas">
+            <p:panel header="Lista de Cuentas" style="margin-top:20px;">
                 <p:dataTable id="cuentasTable" value="#{cuentaController.cuentas}" var="c"
-                             emptyMessage="No hay cuentas registradas">
+                             emptyMessage="No hay cuentas registradas" style="width:100%;">
 
                     <p:column headerText="ID Interno">
                         <h:outputText value="#{c.idCuentasClientes}" />
@@ -135,8 +127,7 @@
 
                 </p:dataTable>
             </p:panel>
-
         </h:form>
+    </ui:define>
 
-    </h:body>
-</html>
+</ui:composition>

@@ -2,103 +2,112 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-<h:head>
-    <title>Gestión de Préstamos</title>
-</h:head>
+<ui:composition template="/WEB-INF/plantillas/SidebarLateral.xhtml">
 
-<h:body>
-<h:form id="formPrestamos">
+    <!-- Título de la página -->
+    <ui:define name="title">
+        Gestión de Préstamos
+    </ui:define>
 
-    <!-- Formulario de solicitud -->
-    <p:panel header="Solicitar Préstamo">
-        <h:panelGrid columns="2" cellpadding="5">
-            <h:outputLabel value="Cédula del Cliente:" />
-            <p:inputText value="#{prestamoController.prestamoNuevo.idCliente}" required="true" label="Cédula" />
+    <!-- Contenido principal -->
+    <ui:define name="content">
 
-            <h:outputLabel value="Tipo de Préstamo:" />
-            <p:selectOneMenu value="#{prestamoController.prestamoNuevo.tipo}" required="true">
-                <f:selectItem itemLabel="Personal" itemValue="personal" />
-                <f:selectItem itemLabel="Hipotecario" itemValue="hipotecario" />
-            </p:selectOneMenu>
+        <h:form id="formPrestamos">
 
-            <h:outputLabel value="Monto:" />
-            <p:inputText value="#{prestamoController.prestamoNuevo.monto}" required="true" label="Monto" />
+            <!-- Formulario de solicitud -->
+            <p:panel header="Solicitar Préstamo">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel value="Cédula del Cliente:" />
+                    <p:inputText value="#{prestamoController.prestamoNuevo.idCliente}" required="true" label="Cédula" />
 
-            <h:outputLabel value="Plazo (meses):" />
-            <p:inputText value="#{prestamoController.prestamoNuevo.plazoMeses}" required="true" label="Plazo" />
+                    <h:outputLabel value="Tipo de Préstamo:" />
+                    <p:selectOneMenu value="#{prestamoController.prestamoNuevo.tipo}" required="true">
+                        <f:selectItem itemLabel="Personal" itemValue="personal" />
+                        <f:selectItem itemLabel="Hipotecario" itemValue="hipotecario" />
+                    </p:selectOneMenu>
 
-            <h:outputLabel value="Tasa de Interés anual (%):" />
-            <p:inputText value="#{prestamoController.prestamoNuevo.tasaInteres}" required="true" label="Tasa" />
-        </h:panelGrid>
+                    <h:outputLabel value="Monto:" />
+                    <p:inputText value="#{prestamoController.prestamoNuevo.monto}" required="true" label="Monto" />
 
-        <p:commandButton value="Solicitar Préstamo"
-                         action="#{prestamoController.agregarPrestamo}"
-                         update="msgs, prestamosTable, cuotasTable" />
-    </p:panel>
+                    <h:outputLabel value="Plazo (meses):" />
+                    <p:inputText value="#{prestamoController.prestamoNuevo.plazoMeses}" required="true" label="Plazo" />
 
-    <p:growl id="msgs" showDetail="true" life="3000" />
+                    <h:outputLabel value="Tasa de Interés anual (%):" />
+                    <p:inputText value="#{prestamoController.prestamoNuevo.tasaInteres}" required="true" label="Tasa" />
+                </h:panelGrid>
 
-    <!-- Tabla de préstamos -->
-    <p:panel header="Lista de Préstamos" style="margin-top:20px;">
-        <p:dataTable id="prestamosTable" value="#{prestamoController.prestamos}" var="p"
-                     paginator="true" rows="10">
+                <p:commandButton value="Solicitar Préstamo"
+                                 action="#{prestamoController.agregarPrestamo}"
+                                 update="msgs, prestamosTable, cuotasTable" />
+            </p:panel>
 
-            <p:column headerText="ID Préstamo">
-                <h:outputText value="#{p.idPrestamo}" />
-            </p:column>
-            <p:column headerText="Cliente">
-                <h:outputText value="#{p.idCliente}" />
-            </p:column>
-            <p:column headerText="Tipo">
-                <h:outputText value="#{p.tipo}" />
-            </p:column>
-            <p:column headerText="Monto">
-                <h:outputText value="#{p.monto}" />
-            </p:column>
-            <p:column headerText="Plazo (meses)">
-                <h:outputText value="#{p.plazoMeses}" />
-            </p:column>
-            <p:column headerText="Tasa (%)">
-                <h:outputText value="#{p.tasaInteres}" />
-            </p:column>
-            <p:column headerText="Estado">
-                <h:outputText value="#{p.estado}" />
-            </p:column>
+            <p:growl id="msgs" showDetail="true" life="3000" />
 
-            <!-- Columna de acción: Ver Cuotas -->
-            <p:column headerText="Acciones">
-                <p:commandButton value="Ver Cuotas"
-                                 action="#{prestamoController.verCuotas(p)}"
-                                 update=":formPrestamos:cuotasTable" />
-            </p:column>
+            <!-- Tabla de préstamos -->
+            <p:panel header="Lista de Préstamos" style="margin-top:20px;">
+                <p:dataTable id="prestamosTable" value="#{prestamoController.prestamos}" var="p"
+                             paginator="true" rows="10">
 
-        </p:dataTable>
-    </p:panel>
+                    <p:column headerText="ID Préstamo">
+                        <h:outputText value="#{p.idPrestamo}" />
+                    </p:column>
+                    <p:column headerText="Cliente">
+                        <h:outputText value="#{p.idCliente}" />
+                    </p:column>
+                    <p:column headerText="Tipo">
+                        <h:outputText value="#{p.tipo}" />
+                    </p:column>
+                    <p:column headerText="Monto">
+                        <h:outputText value="#{p.monto}" />
+                    </p:column>
+                    <p:column headerText="Plazo (meses)">
+                        <h:outputText value="#{p.plazoMeses}" />
+                    </p:column>
+                    <p:column headerText="Tasa (%)">
+                        <h:outputText value="#{p.tasaInteres}" />
+                    </p:column>
+                    <p:column headerText="Estado">
+                        <h:outputText value="#{p.estado}" />
+                    </p:column>
 
-    <!-- Tabla de cuotas -->
-    <p:panel header="Cuotas del Préstamo Seleccionado" style="margin-top:20px;">
-        <p:dataTable id="cuotasTable" value="#{prestamoController.cuotas}" var="c"
-                     paginator="true" rows="12">
+                    <!-- Columna de acción: Ver Cuotas -->
+                    <p:column headerText="Acciones">
+                        <p:commandButton value="Ver Cuotas"
+                                         action="#{prestamoController.verCuotas(p)}"
+                                         update=":formPrestamos:cuotasTable" />
+                    </p:column>
 
-            <p:column headerText="Nro Cuota">
-                <h:outputText value="#{c.nroCuota}" />
-            </p:column>
-            <p:column headerText="Fecha Vencimiento">
-                <h:outputText value="#{c.fechaVencimiento}">
-                    <f:convertDateTime pattern="dd/MM/yyyy" />
-                </h:outputText>
-            </p:column>
-            <p:column headerText="Monto Cuota">
-                <h:outputText value="#{c.montoCuota}" />
-            </p:column>
-            <p:column headerText="Estado">
-                <h:outputText value="#{c.estado}" />
-            </p:column>
-        </p:dataTable>
-    </p:panel>
+                </p:dataTable>
+            </p:panel>
 
-</h:form>
-</h:body>
+            <!-- Tabla de cuotas -->
+            <p:panel header="Cuotas del Préstamo Seleccionado" style="margin-top:20px;">
+                <p:dataTable id="cuotasTable" value="#{prestamoController.cuotas}" var="c"
+                             paginator="true" rows="12">
+
+                    <p:column headerText="Nro Cuota">
+                        <h:outputText value="#{c.nroCuota}" />
+                    </p:column>
+                    <p:column headerText="Fecha Vencimiento">
+                        <h:outputText value="#{c.fechaVencimiento}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Monto Cuota">
+                        <h:outputText value="#{c.montoCuota}" />
+                    </p:column>
+                    <p:column headerText="Estado">
+                        <h:outputText value="#{c.estado}" />
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
 </html>

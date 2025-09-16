@@ -1,43 +1,53 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <h:head>
-        <title>Sistema de Administración</title>
-    </h:head>
-    <h:body>
+<ui:composition template="/WEB-INF/plantillas/SidebarLateral.xhtml">
 
-        <h:form>
-            <p:menubar>
-                <p:menuitem value="Inicio" url="index.xhtml" icon="pi pi-home" />
+    <!-- Título de la página -->
+    <ui:define name="title">
+        Sistema de Administración
+    </ui:define>
 
-                <p:submenu label="Clientes" icon="pi pi-users">
-                    <p:menuitem value="Gestionar Clientes" url="GestionCliente.xhtml" icon="pi pi-user-plus" />
-                </p:submenu>
+    <!-- Contenido principal -->
+    <ui:define name="content">
 
-                <p:submenu label="Cuenta" icon="pi pi-users">
-                    <p:menuitem value="Gestionar Cuenta" url="GestionCuenta.xhtml" icon="pi pi-user-plus" />
-                </p:submenu>
+        <style>
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                margin: 0;
+                padding: 0;
+                background: #f9fafc;
+                color: #2c3e50;
+            }
 
-                <p:submenu label="Transacciones" icon="pi pi-users">
-                    <p:menuitem value="Gestion Transacción" url="GestionTransaccion.xhtml" icon="pi pi-user-plus" />
-                </p:submenu>
-                
-                <p:submenu label="Asientos Contables" icon="pi pi-users">
-                    <p:menuitem value="Gestion Asientos Contables" url="AsientosContables.xhtml" icon="pi pi-user-plus" />
-                </p:submenu>
-                
-                <p:submenu label="Prestamos" icon="pi pi-users">
-                    <p:menuitem value="Gestion de Prestamos" url="GestionPrestamo.xhtml" icon="pi pi-user-plus" />
-                </p:submenu>
+            /* Encabezado del contenido */
+            .header {
+                text-align: center;
+                margin: 50px auto;
+            }
 
+            h1 {
+                font-size: 28px;
+                font-weight: 600;
+                margin-bottom: 10px;
+                color: #2c3e50;
+            }
 
-            </p:menubar>
-        </h:form>
+            p {
+                font-size: 16px;
+                color: #7f8c8d;
+            }
+        </style>
 
-        <h1>Bienvenido al Sistema de Administración</h1>
-        <p>Utiliza el menú superior para navegar entre las opciones.</p>
+        <div class="header">
+            <h1>Bienvenido al Sistema de Administración</h1>
+            <p>Haz clic en ☰ para abrir el menú lateral.</p>
+        </div>
 
-    </h:body>
+    </ui:define>
+
+</ui:composition>
 </html>

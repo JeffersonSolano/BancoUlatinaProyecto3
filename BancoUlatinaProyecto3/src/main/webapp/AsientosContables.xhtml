@@ -1,46 +1,54 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-<h:head>
-    <title>Asientos Contables</title>
-</h:head>
-<h:body>
+<ui:composition template="/WEB-INF/plantillas/SidebarLateral.xhtml">
 
-    <h1>Asientos Contables</h1>
+    <!-- Definimos el título de la página -->
+    <ui:define name="title">
+        Asientos Contables
+    </ui:define>
 
-    <p:panel header="Listado de Asientos Contables">
-        <p:dataTable value="#{asientoController.asientos}" var="a"
-                     emptyMessage="No hay asientos registrados" 
-                     style="margin-top:10px;" rows="10" paginator="true">
+    <!-- Contenido principal -->
+    <ui:define name="content">
 
-            <p:column headerText="ID Asiento">
-                <h:outputText value="#{a.idAsiento}" />
-            </p:column>
+        <h1>Asientos Contables</h1>
 
-            <p:column headerText="ID Transacción">
-                <h:outputText value="#{a.idTransaccion}" />
-            </p:column>
+        <p:panel header="Listado de Asientos Contables">
+            <p:dataTable value="#{asientoController.asientos}" var="a"
+                         emptyMessage="No hay asientos registrados" 
+                         style="margin-top:10px;" rows="10" paginator="true">
 
-            <p:column headerText="Cuenta Contable">
-                <h:outputText value="#{a.cuentaContable}" />
-            </p:column>
+                <p:column headerText="ID Asiento">
+                    <h:outputText value="#{a.idAsiento}" />
+                </p:column>
 
-            <p:column headerText="Debe">
-                <h:outputText value="#{a.debe}" />
-            </p:column>
+                <p:column headerText="ID Transacción">
+                    <h:outputText value="#{a.idTransaccion}" />
+                </p:column>
 
-            <p:column headerText="Haber">
-                <h:outputText value="#{a.haber}" />
-            </p:column>
+                <p:column headerText="Cuenta Contable">
+                    <h:outputText value="#{a.cuentaContable}" />
+                </p:column>
 
-            <p:column headerText="Fecha">
-                <h:outputText value="#{a.fecha}" />
-            </p:column>
+                <p:column headerText="Debe">
+                    <h:outputText value="#{a.debe}" />
+                </p:column>
 
-        </p:dataTable>
-    </p:panel>
+                <p:column headerText="Haber">
+                    <h:outputText value="#{a.haber}" />
+                </p:column>
 
-</h:body>
+                <p:column headerText="Fecha">
+                    <h:outputText value="#{a.fecha}" />
+                </p:column>
+
+            </p:dataTable>
+        </p:panel>
+
+    </ui:define>
+
+</ui:composition>
 </html>
